@@ -4,6 +4,10 @@ object dmTournament: TdmTournament
   Width = 463
   PixelsPerInch = 96
   object dbmTourny: TADOConnection
+    Connected = True
+    ConnectionString = 
+      'Provider=Microsoft.Jet.OLEDB.4.0;Data Source=tournamentDB.mdb;Pe' +
+      'rsist Security Info=False'
     LoginPrompt = False
     Mode = cmShareDenyNone
     Provider = 'Microsoft.Jet.OLEDB.4.0'

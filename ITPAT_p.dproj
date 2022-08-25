@@ -161,6 +161,10 @@
             <Form>frmManagePlayers</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="createTournament_u.pas">
+            <Form>frmCreateTournament</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

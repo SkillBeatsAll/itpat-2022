@@ -19,6 +19,7 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnTournamentViewClick(Sender: TObject);
     procedure btnManagePlayersClick(Sender: TObject);
+    procedure btnCreateTournamentClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -30,9 +31,15 @@ var
 
 implementation
 
-uses authentication_u, tournamentView_u, managePlayers_u;
+uses authentication_u, tournamentView_u, managePlayers_u, createTournament_u;
 
 {$R *.dfm}
+
+procedure TfrmMainMenu.btnCreateTournamentClick(Sender: TObject);
+begin
+  frmCreateTournament.Show;
+  Self.Hide;
+end;
 
 procedure TfrmMainMenu.btnManagePlayersClick(Sender: TObject);
 begin

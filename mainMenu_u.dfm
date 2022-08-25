@@ -71,6 +71,7 @@ object frmMainMenu: TfrmMainMenu
     Font.Style = []
     ParentFont = False
     TabOrder = 2
+    OnClick = btnCreateTournamentClick
   end
   object btnManageTournament: TButton
     Left = 8

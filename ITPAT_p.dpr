@@ -14,7 +14,8 @@ uses
   Vcl.Styles,
   mainMenu_u in 'mainMenu_u.pas' {frmMainMenu},
   registration_u in 'registration_u.pas' {frmRegistration},
-  managePlayers_u in 'managePlayers_u.pas' {frmManagePlayers};
+  managePlayers_u in 'managePlayers_u.pas' {frmManagePlayers},
+  createTournament_u in 'createTournament_u.pas' {frmCreateTournament};
 
 {$R *.res}
 
@@ -29,5 +30,6 @@ begin
   Application.CreateForm(TfrmMainMenu, frmMainMenu);
   Application.CreateForm(TfrmRegistration, frmRegistration);
   Application.CreateForm(TfrmManagePlayers, frmManagePlayers);
+  Application.CreateForm(TfrmCreateTournament, frmCreateTournament);
   Application.Run;
 end.
