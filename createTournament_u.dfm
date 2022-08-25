@@ -2,7 +2,7 @@ object frmCreateTournament: TfrmCreateTournament
   Left = 0
   Top = 0
   Caption = 'Create a tournament | TournyMan'
-  ClientHeight = 403
+  ClientHeight = 420
   ClientWidth = 426
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -11,6 +11,7 @@ object frmCreateTournament: TfrmCreateTournament
   Font.Name = 'Segoe UI'
   Font.Style = []
   OnActivate = FormActivate
+  OnClose = FormClose
   PixelsPerInch = 96
   TextHeight = 15
   object Label1: TLabel
@@ -47,9 +48,10 @@ object frmCreateTournament: TfrmCreateTournament
     Top = 31
     Width = 121
     Height = 23
+    MaxLength = 20
     TabOrder = 0
   end
-  object ListBox1: TListBox
+  object lstInTournament: TListBox
     Left = 224
     Top = 120
     Width = 183
@@ -57,10 +59,10 @@ object frmCreateTournament: TfrmCreateTournament
     DragMode = dmAutomatic
     ItemHeight = 15
     TabOrder = 1
-    OnDragDrop = ListBox1DragDrop
-    OnDragOver = ListBox1DragOver
+    OnDragDrop = lstInTournamentDragDrop
+    OnDragOver = lstInTournamentDragOver
   end
-  object ListBox2: TListBox
+  object lstPlayers: TListBox
     Left = 16
     Top = 120
     Width = 183
@@ -69,7 +71,7 @@ object frmCreateTournament: TfrmCreateTournament
     ItemHeight = 15
     TabOrder = 2
   end
-  object DateTimePicker1: TDateTimePicker
+  object startDate: TDateTimePicker
     Left = 176
     Top = 31
     Width = 97
@@ -78,7 +80,7 @@ object frmCreateTournament: TfrmCreateTournament
     Time = 0.744122754629643200
     TabOrder = 4
   end
-  object Edit1: TEdit
+  object edtPlayers: TEdit
     Left = 352
     Top = 29
     Width = 55
@@ -86,5 +88,14 @@ object frmCreateTournament: TfrmCreateTournament
     Enabled = False
     TabOrder = 5
     Text = '8'
+  end
+  object btnCreateTournament: TButton
+    Left = 6
+    Top = 383
+    Width = 412
+    Height = 34
+    Caption = 'Create Tournament'
+    TabOrder = 6
+    OnClick = btnCreateTournamentClick
   end
 end

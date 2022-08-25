@@ -4,12 +4,18 @@ object dmTournament: TdmTournament
   Width = 463
   PixelsPerInch = 96
   object dbmTourny: TADOConnection
-    Connected = True
     ConnectionString = 
-      'Provider=Microsoft.Jet.OLEDB.4.0;Data Source=tournamentDB.mdb;Pe' +
-      'rsist Security Info=False'
+      'Provider=Microsoft.Jet.OLEDB.4.0;User ID=Admin;Data Source=.\ass' +
+      'ets\database\tournamentDB.mdb;Mode=Share Deny None;Persist Secur' +
+      'ity Info=False;Jet OLEDB:System database="";Jet OLEDB:Registry P' +
+      'ath="";Jet OLEDB:Database Password="";Jet OLEDB:Engine Type=5;Je' +
+      't OLEDB:Database Locking Mode=1;Jet OLEDB:Global Partial Bulk Op' +
+      's=2;Jet OLEDB:Global Bulk Transactions=1;Jet OLEDB:New Database ' +
+      'Password="";Jet OLEDB:Create System Database=False;Jet OLEDB:Enc' +
+      'rypt Database=False;Jet OLEDB:Don'#39't Copy Locale on Compact=False' +
+      ';Jet OLEDB:Compact Without Replica Repair=False;Jet OLEDB:SFP=Fa' +
+      'lse'
     LoginPrompt = False
-    Mode = cmShareDenyNone
     Provider = 'Microsoft.Jet.OLEDB.4.0'
     Left = 8
     Top = 144

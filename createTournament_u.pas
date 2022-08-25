@@ -11,18 +11,21 @@ uses
 type
   TfrmCreateTournament = class(TForm)
     edtTournamentName: TEdit;
-    ListBox1: TListBox;
-    ListBox2: TListBox;
+    lstInTournament: TListBox;
+    lstPlayers: TListBox;
     GroupBox1: TGroupBox;
     Label1: TLabel;
-    DateTimePicker1: TDateTimePicker;
+    startDate: TDateTimePicker;
     Label2: TLabel;
     Label3: TLabel;
-    Edit1: TEdit;
+    edtPlayers: TEdit;
+    btnCreateTournament: TButton;
     procedure FormActivate(Sender: TObject);
-    procedure ListBox1DragOver(Sender, Source: TObject; X, Y: Integer;
+    procedure lstInTournamentDragOver(Sender, Source: TObject; X, Y: Integer;
       State: TDragState; var Accept: Boolean);
-    procedure ListBox1DragDrop(Sender, Source: TObject; X, Y: Integer);
+    procedure lstInTournamentDragDrop(Sender, Source: TObject; X, Y: Integer);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure btnCreateTournamentClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -34,21 +37,79 @@ var
 
 implementation
 
+uses util_u, mainMenu_u, authentication_u;
+
 {$R *.dfm}
+
+procedure TfrmCreateTournament.btnCreateTournamentClick(Sender: TObject);
+var
+  sName, sSurname, sListBoxEntry: String;
+  i: Integer;
+begin
+  if not (lstInTournament.Items.Count = 8) then
+  begin
+    ShowMessage('Make sure that you have 8 players in your tournament!');
+  end
+  else if lstInTournament.Items.Count = 8 then
+
+  begin
+    // write to DB
+    dmTournament.tblGames.Append;
+    dmTournament.tblGames['GameTitle'] := edtTournamentName.Text;
+    dmTournament.tblGames['InitiatedAt'] := startDate.Date;
+    dmTournament.tblGames['PlayerCount'] := 8;
+
+    // get current logged in user's userID + store as game manager
+    dmTournament.tblCredentials.Locate('Username',
+      authentication_u.sUsername, []);
+    dmTournament.tblGames['GameManager'] := dmTournament.tblCredentials
+      ['UserID'];
+
+    // populate players fields
+    for i := 0 to lstInTournament.Items.Count - 1 do
+    begin
+      sListBoxEntry := lstInTournament.Items[i];
+      sName := Copy(sListBoxEntry, 1, Pos(' ', sListBoxEntry) - 1);
+      Delete(sListBoxEntry, 1, Pos(' ', sListBoxEntry));
+      sSurname := sListBoxEntry;
+      dmTournament.tblPlayers.Locate('FirstName; LastName',
+        VarArrayOf([sName, sSurname]), []);
+      dmTournament.tblGames['Player' + IntToStr(i + 1)] :=
+        dmTournament.tblPlayers['PlayerID'];
+    end;
+    // post to DB
+    dmTournament.tblGames.Post;
+
+    { make results record for created tournament }
+    dmTournament.tblGameResults.Append;
+    dmTournament.tblGameResults['GameID'] := dmTournament.tblGames['GameID'];
+    dmTournament.tblGameResults.Post;
+
+    ShowMessage('Created your tournament!');
+  end;
+end;
 
 procedure TfrmCreateTournament.FormActivate(Sender: TObject);
 begin
+  lstPlayers.Clear;
+  lstInTournament.Clear;
   dmTournament.tblPlayers.First;
   while not dmTournament.tblPlayers.Eof do
   begin
-    ListBox2.Items.Add(dmTournament.tblPlayers['FirstName'] + ' ' +
+    lstPlayers.Items.Add(dmTournament.tblPlayers['FirstName'] + ' ' +
       dmTournament.tblPlayers['LastName']);
     dmTournament.tblPlayers.Next;
   end;
 
 end;
 
-procedure TfrmCreateTournament.ListBox1DragDrop(Sender, Source: TObject;
+procedure TfrmCreateTournament.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+  util.showFormHideSelf(frmMainMenu, Self);
+end;
+
+procedure TfrmCreateTournament.lstInTournamentDragDrop(Sender, Source: TObject;
   X, Y: Integer);
 var
   i: Integer;
@@ -56,29 +117,34 @@ var
   sTemp: string;
 begin
   // Thomas Stutz
-  point.X := X;
-  point.Y := Y;
-  i := 0;
-  while i <= TListBox(Source).Items.Count - 1 do
+  if lstInTournament.Items.Count < 8 then
   begin
-    if TListBox(Source).selected[i] then
+    point.X := X;
+    point.Y := Y;
+    i := 0;
+    while i <= TListBox(Source).Items.Count - 1 do
     begin
-      with Sender as TListBox do
+      if TListBox(Source).selected[i] then
       begin
-        sTemp := TListBox(Source).Items[i];
-        TListBox(Source).Items.Delete(i);
-        Items.Insert(itemAtPos(point, True), sTemp);
+        with Sender as TListBox do
+        begin
+          sTemp := TListBox(Source).Items[i];
+          TListBox(Source).Items.Delete(i);
+          Items.Insert(itemAtPos(point, True), sTemp);
+        end;
       end;
+      Inc(i);
     end;
-    Inc(i);
-  end;
+  end
+  else
+    ShowMessage('There is a maximum of 8 players per tournament!');
 end;
 
-procedure TfrmCreateTournament.ListBox1DragOver(Sender, Source: TObject;
+procedure TfrmCreateTournament.lstInTournamentDragOver(Sender, Source: TObject;
   X, Y: Integer; State: TDragState; var Accept: Boolean);
 begin
-  if Source = ListBox2 then
-    Accept := True;
+  if (Source = lstPlayers) and (lstInTournament.Items.Count < 8) then
+    Accept := True
 end;
 
 end.
