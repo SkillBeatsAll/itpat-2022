@@ -31,26 +31,24 @@ var
 
 implementation
 
-uses authentication_u, tournamentView_u, managePlayers_u, createTournament_u;
+uses authentication_u, tournamentView_u, managePlayers_u, createTournament_u,
+  util_u;
 
 {$R *.dfm}
 
 procedure TfrmMainMenu.btnCreateTournamentClick(Sender: TObject);
 begin
-  frmCreateTournament.Show;
-  Self.Hide;
+  util.showFormHideSelf(frmCreateTournament, Self);
 end;
 
 procedure TfrmMainMenu.btnManagePlayersClick(Sender: TObject);
 begin
-  frmManagePlayers.Show;
-  Self.Hide;
+  util.showFormHideSelf(frmManagePlayers, Self);
 end;
 
 procedure TfrmMainMenu.btnTournamentViewClick(Sender: TObject);
 begin
-  frmTournamentView.Show;
-  Self.Hide;
+  util.showFormHideSelf(frmTournamentView, Self);
 end;
 
 procedure TfrmMainMenu.FormActivate(Sender: TObject);

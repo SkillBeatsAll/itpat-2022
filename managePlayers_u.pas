@@ -7,7 +7,7 @@ uses
   System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Vcl.Grids, Vcl.DBGrids,
   dbmTournament,
-  Vcl.StdCtrls, Vcl.Mask, Vcl.ExtCtrls, mainMenu_u;
+  Vcl.StdCtrls, Vcl.Mask, Vcl.ExtCtrls, mainMenu_u, util_u;
 
 type
   TfrmManagePlayers = class(TForm)
@@ -77,8 +77,7 @@ end;
 procedure TfrmManagePlayers.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
-  Self.Hide;
-  frmMainMenu.Show;
+  util.showFormHideSelf(frmMainMenu, Self);
 end;
 
 end.
