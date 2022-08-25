@@ -26,6 +26,9 @@ type
     procedure lstInTournamentDragDrop(Sender, Source: TObject; X, Y: Integer);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnCreateTournamentClick(Sender: TObject);
+    procedure lstPlayersDragOver(Sender, Source: TObject; X, Y: Integer;
+      State: TDragState; var Accept: Boolean);
+    procedure lstPlayersDragDrop(Sender, Source: TObject; X, Y: Integer);
   private
     { Private declarations }
   public
@@ -46,7 +49,7 @@ var
   sName, sSurname, sListBoxEntry: String;
   i: Integer;
 begin
-  if not (lstInTournament.Items.Count = 8) then
+  if not(lstInTournament.Items.Count = 8) then
   begin
     ShowMessage('Make sure that you have 8 players in your tournament!');
   end
@@ -91,8 +94,11 @@ end;
 
 procedure TfrmCreateTournament.FormActivate(Sender: TObject);
 begin
+  // clear for user
   lstPlayers.Clear;
   lstInTournament.Clear;
+  edtTournamentName.Clear;
+
   dmTournament.tblPlayers.First;
   while not dmTournament.tblPlayers.Eof do
   begin
@@ -144,6 +150,39 @@ procedure TfrmCreateTournament.lstInTournamentDragOver(Sender, Source: TObject;
   X, Y: Integer; State: TDragState; var Accept: Boolean);
 begin
   if (Source = lstPlayers) and (lstInTournament.Items.Count < 8) then
+    Accept := True
+end;
+
+procedure TfrmCreateTournament.lstPlayersDragDrop(Sender, Source: TObject;
+  X, Y: Integer);
+var
+  i: Integer;
+  point: TPoint;
+  sTemp: string;
+begin
+  // Thomas Stutz
+  point.X := X;
+  point.Y := Y;
+  i := 0;
+  while i <= TListBox(Source).Items.Count - 1 do
+  begin
+    if TListBox(Source).selected[i] then
+    begin
+      with Sender as TListBox do
+      begin
+        sTemp := TListBox(Source).Items[i];
+        TListBox(Source).Items.Delete(i);
+        Items.Insert(itemAtPos(point, True), sTemp);
+      end;
+    end;
+    Inc(i);
+  end;
+end;
+
+procedure TfrmCreateTournament.lstPlayersDragOver(Sender, Source: TObject;
+  X, Y: Integer; State: TDragState; var Accept: Boolean);
+begin
+  if Source = lstInTournament then
     Accept := True
 end;
 

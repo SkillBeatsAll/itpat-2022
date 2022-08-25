@@ -70,6 +70,8 @@ object frmCreateTournament: TfrmCreateTournament
     DragMode = dmAutomatic
     ItemHeight = 15
     TabOrder = 2
+    OnDragDrop = lstPlayersDragDrop
+    OnDragOver = lstPlayersDragOver
   end
   object startDate: TDateTimePicker
     Left = 176
