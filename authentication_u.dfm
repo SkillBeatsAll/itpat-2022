@@ -1,7 +1,7 @@
 object frmAuthentication: TfrmAuthentication
   Left = 0
   Top = 0
-  Caption = 'Authentication'
+  Caption = 'Authentication | TournyMan'
   ClientHeight = 293
   ClientWidth = 399
   Color = clBtnFace
