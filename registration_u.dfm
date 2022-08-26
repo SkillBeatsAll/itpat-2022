@@ -2,8 +2,8 @@ object frmRegistration: TfrmRegistration
   Left = 0
   Top = 0
   Caption = 'Register | Tournament Manager'
-  ClientHeight = 309
-  ClientWidth = 289
+  ClientHeight = 310
+  ClientWidth = 288
   Color = clSkyBlue
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -11,8 +11,16 @@ object frmRegistration: TfrmRegistration
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poMainFormCenter
+  OnActivate = FormActivate
   PixelsPerInch = 96
   TextHeight = 15
+  object imgBackground: TImage
+    Left = 0
+    Top = 0
+    Width = 302
+    Height = 319
+    Stretch = True
+  end
   object Label1: TLabel
     Left = 8
     Top = 24
@@ -58,17 +66,11 @@ object frmRegistration: TfrmRegistration
     Width = 261
     Height = 113
     Caption = 'Select your account type:'
-    DefaultHeaderFont = False
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -13
     Font.Name = 'Segoe UI'
     Font.Style = []
-    HeaderFont.Charset = DEFAULT_CHARSET
-    HeaderFont.Color = clBtnText
-    HeaderFont.Height = -13
-    HeaderFont.Name = 'Segoe UI'
-    HeaderFont.Style = []
     Items.Strings = (
       'Spectator'
       'Manager')

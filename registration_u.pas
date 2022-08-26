@@ -18,7 +18,9 @@ type
     edtUsername: TEdit;
     edtPassword: TEdit;
     edtConfirmPassword: TEdit;
+    imgBackground: TImage;
     procedure btnRegisterClick(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -30,7 +32,7 @@ var
 
 implementation
 
-uses authentication_u, authenticationHelp_u;
+uses authentication_u, authenticationHelp_u, util_u;
 
 {$R *.dfm}
 
@@ -82,6 +84,11 @@ begin
   begin
     ShowMessage('One of your fields are blank!');
   end;
+end;
+
+procedure TfrmRegistration.FormActivate(Sender: TObject);
+begin
+  util.setBackground(Self);
 end;
 
 end.
