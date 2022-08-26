@@ -2,8 +2,8 @@ object frmAuthentication: TfrmAuthentication
   Left = 0
   Top = 0
   Caption = 'Authentication'
-  ClientHeight = 242
-  ClientWidth = 350
+  ClientHeight = 293
+  ClientWidth = 399
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -23,29 +23,29 @@ object frmAuthentication: TfrmAuthentication
     Transparent = True
   end
   object Label1: TLabel
-    Left = 80
-    Top = 91
+    Left = 100
+    Top = 107
     Width = 56
     Height = 16
     Caption = 'Username:'
   end
   object Label2: TLabel
-    Left = 80
-    Top = 131
+    Left = 100
+    Top = 147
     Width = 53
     Height = 16
     Caption = 'Password:'
   end
   object Label3: TLabel
-    Left = 80
-    Top = 168
+    Left = 100
+    Top = 184
     Width = 80
     Height = 16
     Caption = 'Not registered?'
   end
   object lblRegisterRedirect: TLabel
-    Left = 168
-    Top = 168
+    Left = 188
+    Top = 184
     Width = 96
     Height = 16
     Cursor = crHandPoint
@@ -61,20 +61,22 @@ object frmAuthentication: TfrmAuthentication
   object imgLogoLong: TImage
     Left = 8
     Top = 8
-    Width = 334
-    Height = 63
+    Width = 385
+    Height = 77
+    ParentShowHint = False
+    ShowHint = False
   end
   object edtUsername: TEdit
-    Left = 160
-    Top = 88
+    Left = 180
+    Top = 104
     Width = 121
     Height = 23
     TabOrder = 0
     TextHint = 'Username'
   end
   object edtPassword: TEdit
-    Left = 160
-    Top = 128
+    Left = 180
+    Top = 144
     Width = 121
     Height = 23
     PasswordChar = #8226
@@ -82,8 +84,8 @@ object frmAuthentication: TfrmAuthentication
     TextHint = 'Password'
   end
   object btnLogin: TButton
-    Left = 276
-    Top = 205
+    Left = 318
+    Top = 253
     Width = 79
     Height = 43
     Caption = 'Login'
