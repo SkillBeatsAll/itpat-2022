@@ -44,40 +44,50 @@ begin
   begin
     if edtPassword.Text = edtConfirmPassword.Text then
     begin
-      dmTournament.tblCredentials.Insert;
-      authentication_u.sUsername := edtUsername.Text;
-      authentication_u.sPassword := edtPassword.Text;
-      dmTournament.tblCredentials['UserName'] := authentication_u.sUsername;
-      dmTournament.tblCredentials['Password'] := authentication_u.sPassword;
-
-      // get user level + write to db
-      case rgpUserLevel.ItemIndex of
-        0: // spectator
-          authentication_u.iUserLevel := 1;
-        1: // manager
-          authentication_u.iUserLevel := 2;
-      end;
-      dmTournament.tblCredentials['UserLevel'] := iUserLevel;
-
-      // otp only a requirement for managers
-      if authentication_u.iUserLevel = 2 then
+      if not(dmTournament.tblCredentials.Locate('Username',
+        edtUsername.Text, [])) then
       begin
-        authentication_u.sOTP := GenerateOTPSecret(16);
-        dmTournament.tblCredentials['Secret'] := authentication_u.sOTP;
-      end;
-      dmTournament.tblCredentials.Post;
+        dmTournament.tblCredentials.Insert;
+        authentication_u.sUsername := edtUsername.Text;
+        authentication_u.sPassword := edtPassword.Text;
+        dmTournament.tblCredentials['UserName'] := authentication_u.sUsername;
+        dmTournament.tblCredentials['Password'] := authentication_u.sPassword;
 
-      ShowMessage('You have successfully registered!');
-      frmAuthentication.Show;
-      if authentication_u.iUserLevel = 2 then // only OTP if manager!
+        // get user level + write to db
+        case rgpUserLevel.ItemIndex of
+          0: // spectator
+            authentication_u.iUserLevel := 1;
+          1: // manager
+            authentication_u.iUserLevel := 2;
+        end;
+        dmTournament.tblCredentials['UserLevel'] := iUserLevel;
+
+        // otp only a requirement for managers
+        if authentication_u.iUserLevel = 2 then
+        begin
+          authentication_u.sOTP := GenerateOTPSecret(16);
+          dmTournament.tblCredentials['Secret'] := authentication_u.sOTP;
+        end;
+        dmTournament.tblCredentials.Post;
+
+        ShowMessage('You have successfully registered!');
+        frmAuthentication.Show;
+        if authentication_u.iUserLevel = 2 then // only OTP if manager!
+        begin
+          frmAuthHelp.Show;
+        end;
+        Self.Hide;
+      end
+      else
       begin
-        frmAuthHelp.Show;
-      end;
-      Self.Hide;
+        ShowMessage('This username is already taken.');
+        edtUsername.SetFocus;
+      end
     end
     else
     begin
       ShowMessage('Your passwords do not match!');
+      edtPassword.SetFocus;
     end;
   end
   else
