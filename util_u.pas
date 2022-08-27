@@ -10,8 +10,9 @@ uses Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
 type
   util = class
   public
-    class procedure setBackground(Sender: TForm);
-    class procedure showFormHideSelf(formToShow: TForm; Sender: TForm);
+    class procedure setBackground(formToUpdate: TForm);
+    class procedure showFormHideSelf(formToShow: TForm; formToHide: TForm);
+    class procedure alignLabel(lblToAlign: TLabel);
   end;
 
 implementation
@@ -19,13 +20,13 @@ implementation
 uses authentication_u, authenticationHelp_u;
 
 { util }
-class procedure util.setBackground(Sender: TForm);
+class procedure util.setBackground(formToUpdate: TForm);
 var
   i: Integer;
   imgBackground: TImage;
 begin
   i := Random(9) + 1;
-  imgBackground := TImage(Sender.FindComponent('imgBackground'));
+  imgBackground := TImage(formToUpdate.FindComponent('imgBackground'));
   try
     imgBackground.Picture.LoadFromFile('./assets/backgrounds/' + IntToStr(i)
       + '.jpeg');
@@ -34,10 +35,18 @@ begin
   end;
 end;
 
-class procedure util.showFormHideSelf(formToShow: TForm; Sender: TForm);
+class procedure util.showFormHideSelf(formToShow: TForm; formToHide: TForm);
 begin
   formToShow.Show;
-  Sender.Hide;
+  formToHide.Hide;
+end;
+
+class procedure util.alignLabel(lblToAlign: TLabel);
+begin
+  // horizontal:
+  lblToAlign.Alignment := taCenter;
+  // vertical:
+  lblToAlign.Layout := tlCenter;
 end;
 
 end.

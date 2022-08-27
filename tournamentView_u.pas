@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
   System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.DBCtrls,
-  dbmTournament, util_u, mainMenu_u;
+  dbmTournament, util_u, mainMenu_u, Vcl.WinXCtrls, System.UITypes;
 
 type
   TfrmTournamentView = class(TForm)
@@ -46,6 +46,8 @@ type
     F2: TLabel;
     Winner: TLabel;
     ComboBox1: TComboBox;
+    lblEditMode: TLabel;
+    toggleEditMode: TToggleSwitch;
     procedure btnRefactoredClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -62,11 +64,15 @@ var
 
 implementation
 
+uses authentication_u;
+
 function TfrmTournamentView.getFullName(playerID: Integer): String;
 begin
-  dmTournament.tblPlayers.Locate('PlayerID', playerID, []);
-  result := dmTournament.tblPlayers['FirstName'] + ' ' + dmTournament.tblPlayers
-    ['LastName'];
+  if dmTournament.tblPlayers.Locate('PlayerID', playerID, []) then
+    result := dmTournament.tblPlayers['FirstName'] + ' ' +
+      dmTournament.tblPlayers['LastName']
+  else
+    result := 'TBD';
 end;
 
 {$R *.dfm}
@@ -104,7 +110,14 @@ begin
 
     for i := 1 to ((tournamentsize * 2) - 1) do
     begin
+      { tEditLabel is found by looking for the component that we are working with (QF/SF/F/Winner)
+        1) The caption is set to the player's full name, or "TBD" if its not yet entered
+        2) The label is aligned horizontally in the center
+        3) The label is aligned vertically in the center
+        4) Color set to light green
 
+        Note: 2 and 3 are performed by a utility function under util_u.
+      }
       case i of
         1 .. 8:
           begin
@@ -112,8 +125,8 @@ begin
             tEditLabel.Caption :=
               getFullName(dmTournament.tblGameResults['QuarterFinals' +
               IntToStr(i)]);
-            tEditLabel.Width := Shape1.Width;
-            tEditLabel.Alignment := taCenter;
+            util.alignLabel(tEditLabel);
+            tEditLabel.Font.Color := clWebLightGreen;
           end;
         9 .. 12:
           begin
@@ -121,8 +134,8 @@ begin
             tEditLabel.Caption :=
               getFullName(dmTournament.tblGameResults
               ['SemiFinals' + IntToStr(i - 8)]);
-            tEditLabel.Width := Shape1.Width;
-            tEditLabel.Alignment := taCenter;
+            util.alignLabel(tEditLabel);
+            tEditLabel.Font.Color := clWebLightGreen;
           end;
         13 .. 14:
           begin
@@ -130,16 +143,16 @@ begin
             tEditLabel.Caption :=
               getFullName(dmTournament.tblGameResults
               ['Finals' + IntToStr(i - 12)]);
-            tEditLabel.Width := Shape1.Width;
-            tEditLabel.Alignment := taCenter;
+            util.alignLabel(tEditLabel);
+            tEditLabel.Font.Color := clWebLightGreen;
           end;
         15:
           begin
             tEditLabel := TLabel(FindComponent('Winner'));
             tEditLabel.Caption :=
               getFullName(dmTournament.tblGameResults['Winner']);
-            tEditLabel.Width := Shape1.Width;
-            tEditLabel.Alignment := taCenter;
+            util.alignLabel(tEditLabel);
+            tEditLabel.Font.Color := clWebLightGreen;
           end;
       end;
 
@@ -164,6 +177,18 @@ begin
   end;
   ComboBox1.Refresh;
 
+  if (authentication_u.iUserLevel = 2) or (authentication_u.iUserLevel = 3) then
+  begin
+    lblEditMode.Visible := true;
+    toggleEditMode.State := tssOff;
+    toggleEditMode.Visible := true;
+  end
+  else if authentication_u.iUserLevel = 1 then
+  begin
+    lblEditMode.Visible := false;
+    toggleEditMode.State := tssOff;
+    toggleEditMode.Visible := false;
+  end;
 end;
 
 procedure TfrmTournamentView.FormClose(Sender: TObject;
@@ -179,7 +204,7 @@ var
   moveX, moveY: Integer;
   divisionFactor, multiplicationFactor: Integer;
 begin
-  canvas.pen.Color := clMaroon;
+  canvas.pen.Color := TColor($663399);
   canvas.pen.Width := 4;
   case StrToInt(shp3.name[6] + shp3.name[7]) of
     9 .. 12:

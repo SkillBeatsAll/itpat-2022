@@ -14,12 +14,16 @@ object frmTournamentView: TfrmTournamentView
   OnActivate = FormActivate
   OnClose = FormClose
   PixelsPerInch = 96
+  DesignSize = (
+    787
+    466)
   TextHeight = 15
   object Shape1: TShape
     Left = 8
     Top = 46
     Width = 121
     Height = 25
+    Brush.Color = clTeal
     Shape = stRoundRect
   end
   object Shape2: TShape
@@ -27,6 +31,7 @@ object frmTournamentView: TfrmTournamentView
     Top = 94
     Width = 121
     Height = 25
+    Brush.Color = clTeal
     Shape = stRoundRect
   end
   object Shape3: TShape
@@ -34,6 +39,7 @@ object frmTournamentView: TfrmTournamentView
     Top = 142
     Width = 121
     Height = 25
+    Brush.Color = clTeal
     Shape = stRoundRect
   end
   object Shape5: TShape
@@ -41,6 +47,7 @@ object frmTournamentView: TfrmTournamentView
     Top = 238
     Width = 121
     Height = 25
+    Brush.Color = clTeal
     Shape = stRoundRect
   end
   object Shape6: TShape
@@ -48,6 +55,7 @@ object frmTournamentView: TfrmTournamentView
     Top = 286
     Width = 121
     Height = 25
+    Brush.Color = clTeal
     Shape = stRoundRect
   end
   object Shape7: TShape
@@ -55,6 +63,7 @@ object frmTournamentView: TfrmTournamentView
     Top = 334
     Width = 121
     Height = 25
+    Brush.Color = clTeal
     Shape = stRoundRect
   end
   object Shape8: TShape
@@ -62,6 +71,7 @@ object frmTournamentView: TfrmTournamentView
     Top = 382
     Width = 121
     Height = 25
+    Brush.Color = clTeal
     Shape = stRoundRect
   end
   object Shape9: TShape
@@ -70,6 +80,7 @@ object frmTournamentView: TfrmTournamentView
     Width = 121
     Height = 25
     ParentCustomHint = False
+    Brush.Color = clTeal
     Shape = stRoundRect
   end
   object Shape10: TShape
@@ -77,6 +88,7 @@ object frmTournamentView: TfrmTournamentView
     Top = 166
     Width = 121
     Height = 25
+    Brush.Color = clTeal
     Shape = stRoundRect
   end
   object Shape11: TShape
@@ -84,6 +96,7 @@ object frmTournamentView: TfrmTournamentView
     Top = 262
     Width = 121
     Height = 25
+    Brush.Color = clTeal
     Shape = stRoundRect
   end
   object Shape12: TShape
@@ -91,6 +104,7 @@ object frmTournamentView: TfrmTournamentView
     Top = 358
     Width = 121
     Height = 25
+    Brush.Color = clTeal
     Shape = stRoundRect
   end
   object Shape13: TShape
@@ -98,6 +112,7 @@ object frmTournamentView: TfrmTournamentView
     Top = 118
     Width = 121
     Height = 25
+    Brush.Color = clTeal
     Shape = stRoundRect
   end
   object Shape14: TShape
@@ -105,6 +120,7 @@ object frmTournamentView: TfrmTournamentView
     Top = 310
     Width = 121
     Height = 25
+    Brush.Color = clTeal
     Shape = stRoundRect
   end
   object Shape15: TShape
@@ -112,6 +128,7 @@ object frmTournamentView: TfrmTournamentView
     Top = 219
     Width = 121
     Height = 25
+    Brush.Color = clTeal
     Shape = stRoundRect
   end
   object Shape4: TShape
@@ -119,6 +136,7 @@ object frmTournamentView: TfrmTournamentView
     Top = 190
     Width = 121
     Height = 25
+    Brush.Color = clTeal
     Shape = stRoundRect
   end
   object Label1: TLabel
@@ -175,9 +193,11 @@ object frmTournamentView: TfrmTournamentView
   end
   object QF1: TLabel
     Left = 8
-    Top = 50
-    Width = 4
-    Height = 17
+    Top = 46
+    Width = 121
+    Height = 25
+    Anchors = [akLeft, akTop, akBottom]
+    AutoSize = False
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clRed
     Font.Height = -13
@@ -188,9 +208,11 @@ object frmTournamentView: TfrmTournamentView
   end
   object QF2: TLabel
     Left = 8
-    Top = 99
-    Width = 4
-    Height = 17
+    Top = 94
+    Width = 121
+    Height = 25
+    Anchors = [akLeft, akTop, akBottom]
+    AutoSize = False
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clRed
     Font.Height = -13
@@ -201,9 +223,11 @@ object frmTournamentView: TfrmTournamentView
   end
   object QF3: TLabel
     Left = 8
-    Top = 145
-    Width = 4
-    Height = 17
+    Top = 142
+    Width = 121
+    Height = 25
+    Anchors = [akLeft, akTop, akBottom]
+    AutoSize = False
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clRed
     Font.Height = -13
@@ -214,9 +238,11 @@ object frmTournamentView: TfrmTournamentView
   end
   object QF4: TLabel
     Left = 8
-    Top = 195
-    Width = 4
-    Height = 17
+    Top = 190
+    Width = 121
+    Height = 25
+    Anchors = [akLeft, akTop, akBottom]
+    AutoSize = False
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clRed
     Font.Height = -13
@@ -227,9 +253,11 @@ object frmTournamentView: TfrmTournamentView
   end
   object QF5: TLabel
     Left = 8
-    Top = 243
-    Width = 4
-    Height = 17
+    Top = 238
+    Width = 121
+    Height = 25
+    Anchors = [akLeft, akTop, akBottom]
+    AutoSize = False
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clRed
     Font.Height = -13
@@ -240,9 +268,11 @@ object frmTournamentView: TfrmTournamentView
   end
   object QF6: TLabel
     Left = 8
-    Top = 290
-    Width = 4
-    Height = 17
+    Top = 286
+    Width = 121
+    Height = 25
+    Anchors = [akLeft, akTop, akBottom]
+    AutoSize = False
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clRed
     Font.Height = -13
@@ -253,9 +283,11 @@ object frmTournamentView: TfrmTournamentView
   end
   object QF7: TLabel
     Left = 8
-    Top = 339
-    Width = 4
-    Height = 17
+    Top = 334
+    Width = 121
+    Height = 25
+    Anchors = [akLeft, akTop, akBottom]
+    AutoSize = False
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clRed
     Font.Height = -13
@@ -266,9 +298,11 @@ object frmTournamentView: TfrmTournamentView
   end
   object QF8: TLabel
     Left = 8
-    Top = 386
-    Width = 4
-    Height = 17
+    Top = 382
+    Width = 121
+    Height = 25
+    Anchors = [akLeft, akTop, akBottom]
+    AutoSize = False
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clRed
     Font.Height = -13
@@ -278,10 +312,11 @@ object frmTournamentView: TfrmTournamentView
     StyleElements = []
   end
   object SF1: TLabel
-    Left = 227
-    Top = 74
-    Width = 14
-    Height = 17
+    Left = 224
+    Top = 70
+    Width = 121
+    Height = 25
+    AutoSize = False
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clRed
     Font.Height = -13
@@ -291,10 +326,11 @@ object frmTournamentView: TfrmTournamentView
     StyleElements = []
   end
   object SF2: TLabel
-    Left = 227
-    Top = 170
-    Width = 14
-    Height = 17
+    Left = 224
+    Top = 166
+    Width = 121
+    Height = 25
+    AutoSize = False
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clRed
     Font.Height = -13
@@ -304,10 +340,11 @@ object frmTournamentView: TfrmTournamentView
     StyleElements = []
   end
   object SF3: TLabel
-    Left = 227
-    Top = 266
-    Width = 14
-    Height = 17
+    Left = 224
+    Top = 262
+    Width = 121
+    Height = 25
+    AutoSize = False
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clRed
     Font.Height = -13
@@ -317,10 +354,11 @@ object frmTournamentView: TfrmTournamentView
     StyleElements = []
   end
   object SF4: TLabel
-    Left = 227
-    Top = 363
-    Width = 14
-    Height = 16
+    Left = 224
+    Top = 358
+    Width = 121
+    Height = 25
+    AutoSize = False
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clRed
     Font.Height = -13
@@ -330,10 +368,11 @@ object frmTournamentView: TfrmTournamentView
     StyleElements = []
   end
   object F1: TLabel
-    Left = 444
-    Top = 122
-    Width = 4
-    Height = 18
+    Left = 440
+    Top = 118
+    Width = 121
+    Height = 25
+    AutoSize = False
     Color = clBtnFace
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clRed
@@ -346,10 +385,11 @@ object frmTournamentView: TfrmTournamentView
     StyleElements = []
   end
   object F2: TLabel
-    Left = 444
-    Top = 314
-    Width = 4
-    Height = 18
+    Left = 440
+    Top = 310
+    Width = 121
+    Height = 25
+    AutoSize = False
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clRed
     Font.Height = -13
@@ -360,9 +400,10 @@ object frmTournamentView: TfrmTournamentView
   end
   object Winner: TLabel
     Left = 656
-    Top = 223
-    Width = 17
-    Height = 17
+    Top = 219
+    Width = 121
+    Height = 25
+    AutoSize = False
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clRed
     Font.Height = -13
@@ -370,6 +411,13 @@ object frmTournamentView: TfrmTournamentView
     Font.Style = [fsBold]
     ParentFont = False
     StyleElements = []
+  end
+  object lblEditMode: TLabel
+    Left = 8
+    Top = 447
+    Width = 57
+    Height = 15
+    Caption = 'Edit Mode:'
   end
   object btnRefactored: TButton
     Left = 642
@@ -387,5 +435,12 @@ object frmTournamentView: TfrmTournamentView
     Height = 23
     TabOrder = 1
     TextHint = 'Select a tournament to view'
+  end
+  object toggleEditMode: TToggleSwitch
+    Left = 71
+    Top = 446
+    Width = 73
+    Height = 20
+    TabOrder = 2
   end
 end
