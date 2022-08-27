@@ -106,6 +106,11 @@ begin
       end;
       joinShapes(tS1, tS2, tS3);
       i := i + 2;
+
+      // shape colors:
+      tS1.Brush.Color := TColor($00f7a971);
+      tS2.Brush.Color := TColor($00f7a971);
+      tS3.Brush.Color := TColor($00f7a971);
     until (i >= (tournamentsize * 2) - 1);
 
     for i := 1 to ((tournamentsize * 2) - 1) do
@@ -126,7 +131,7 @@ begin
               getFullName(dmTournament.tblGameResults['QuarterFinals' +
               IntToStr(i)]);
             util.alignLabel(tEditLabel);
-            tEditLabel.Font.Color := clWebLightGreen;
+            tEditLabel.Font.Color := $007a2346;
           end;
         9 .. 12:
           begin
@@ -135,7 +140,7 @@ begin
               getFullName(dmTournament.tblGameResults
               ['SemiFinals' + IntToStr(i - 8)]);
             util.alignLabel(tEditLabel);
-            tEditLabel.Font.Color := clWebLightGreen;
+            tEditLabel.Font.Color := $00ddddf5;
           end;
         13 .. 14:
           begin
@@ -144,7 +149,7 @@ begin
               getFullName(dmTournament.tblGameResults
               ['Finals' + IntToStr(i - 12)]);
             util.alignLabel(tEditLabel);
-            tEditLabel.Font.Color := clWebLightGreen;
+            tEditLabel.Font.Color := $00a74af8;
           end;
         15:
           begin
@@ -152,7 +157,7 @@ begin
             tEditLabel.Caption :=
               getFullName(dmTournament.tblGameResults['Winner']);
             util.alignLabel(tEditLabel);
-            tEditLabel.Font.Color := clWebLightGreen;
+            tEditLabel.Font.Color := TColor($0020972b);
           end;
       end;
 
