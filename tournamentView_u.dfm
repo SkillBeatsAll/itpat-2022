@@ -205,6 +205,7 @@ object frmTournamentView: TfrmTournamentView
     Font.Style = [fsBold]
     ParentFont = False
     StyleElements = []
+    OnClick = PlayerLabelClick
   end
   object QF2: TLabel
     Left = 8
@@ -220,6 +221,7 @@ object frmTournamentView: TfrmTournamentView
     Font.Style = [fsBold]
     ParentFont = False
     StyleElements = []
+    OnClick = PlayerLabelClick
   end
   object QF3: TLabel
     Left = 8
@@ -235,6 +237,7 @@ object frmTournamentView: TfrmTournamentView
     Font.Style = [fsBold]
     ParentFont = False
     StyleElements = []
+    OnClick = PlayerLabelClick
   end
   object QF4: TLabel
     Left = 8
@@ -250,6 +253,7 @@ object frmTournamentView: TfrmTournamentView
     Font.Style = [fsBold]
     ParentFont = False
     StyleElements = []
+    OnClick = PlayerLabelClick
   end
   object QF5: TLabel
     Left = 8
@@ -265,6 +269,7 @@ object frmTournamentView: TfrmTournamentView
     Font.Style = [fsBold]
     ParentFont = False
     StyleElements = []
+    OnClick = PlayerLabelClick
   end
   object QF6: TLabel
     Left = 8
@@ -280,6 +285,7 @@ object frmTournamentView: TfrmTournamentView
     Font.Style = [fsBold]
     ParentFont = False
     StyleElements = []
+    OnClick = PlayerLabelClick
   end
   object QF7: TLabel
     Left = 8
@@ -295,6 +301,7 @@ object frmTournamentView: TfrmTournamentView
     Font.Style = [fsBold]
     ParentFont = False
     StyleElements = []
+    OnClick = PlayerLabelClick
   end
   object QF8: TLabel
     Left = 8
@@ -310,6 +317,7 @@ object frmTournamentView: TfrmTournamentView
     Font.Style = [fsBold]
     ParentFont = False
     StyleElements = []
+    OnClick = PlayerLabelClick
   end
   object SF1: TLabel
     Left = 224
@@ -324,6 +332,7 @@ object frmTournamentView: TfrmTournamentView
     Font.Style = [fsBold]
     ParentFont = False
     StyleElements = []
+    OnClick = PlayerLabelClick
   end
   object SF2: TLabel
     Left = 224
@@ -338,6 +347,7 @@ object frmTournamentView: TfrmTournamentView
     Font.Style = [fsBold]
     ParentFont = False
     StyleElements = []
+    OnClick = PlayerLabelClick
   end
   object SF3: TLabel
     Left = 224
@@ -352,6 +362,7 @@ object frmTournamentView: TfrmTournamentView
     Font.Style = [fsBold]
     ParentFont = False
     StyleElements = []
+    OnClick = PlayerLabelClick
   end
   object SF4: TLabel
     Left = 224
@@ -366,6 +377,7 @@ object frmTournamentView: TfrmTournamentView
     Font.Style = [fsBold]
     ParentFont = False
     StyleElements = []
+    OnClick = PlayerLabelClick
   end
   object F1: TLabel
     Left = 440
@@ -383,6 +395,7 @@ object frmTournamentView: TfrmTournamentView
     ParentFont = False
     Transparent = True
     StyleElements = []
+    OnClick = PlayerLabelClick
   end
   object F2: TLabel
     Left = 440
@@ -397,6 +410,7 @@ object frmTournamentView: TfrmTournamentView
     Font.Style = [fsBold]
     ParentFont = False
     StyleElements = []
+    OnClick = PlayerLabelClick
   end
   object Winner: TLabel
     Left = 656
@@ -411,6 +425,7 @@ object frmTournamentView: TfrmTournamentView
     Font.Style = [fsBold]
     ParentFont = False
     StyleElements = []
+    OnClick = PlayerLabelClick
   end
   object lblEditMode: TLabel
     Left = 8
@@ -419,14 +434,14 @@ object frmTournamentView: TfrmTournamentView
     Height = 15
     Caption = 'Edit Mode:'
   end
-  object btnRefactored: TButton
+  object btnShowTournament: TButton
     Left = 642
     Top = 397
     Width = 139
     Height = 67
-    Caption = 'Refactored'
+    Caption = 'Show Tournament'
     TabOrder = 0
-    OnClick = btnRefactoredClick
+    OnClick = btnShowTournamentClick
   end
   object ComboBox1: TComboBox
     Left = 464
@@ -442,5 +457,6 @@ object frmTournamentView: TfrmTournamentView
     Width = 73
     Height = 20
     TabOrder = 2
+    OnClick = toggleEditModeClick
   end
 end

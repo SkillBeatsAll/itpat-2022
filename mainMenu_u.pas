@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
   System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.WinXCtrls;
 
 type
   TfrmMainMenu = class(TForm)
@@ -20,6 +20,7 @@ type
     procedure btnTournamentViewClick(Sender: TObject);
     procedure btnManagePlayersClick(Sender: TObject);
     procedure btnCreateTournamentClick(Sender: TObject);
+    procedure btnManageTournamentClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -44,6 +45,12 @@ end;
 procedure TfrmMainMenu.btnManagePlayersClick(Sender: TObject);
 begin
   util.showFormHideSelf(frmManagePlayers, Self);
+end;
+
+procedure TfrmMainMenu.btnManageTournamentClick(Sender: TObject);
+begin
+  util.showFormHideSelf(frmTournamentView, Self);
+  frmTournamentView.toggleEditMode.State := tssOn;
 end;
 
 procedure TfrmMainMenu.btnTournamentViewClick(Sender: TObject);

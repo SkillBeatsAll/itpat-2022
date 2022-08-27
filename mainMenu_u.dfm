@@ -86,6 +86,7 @@ object frmMainMenu: TfrmMainMenu
     Font.Style = []
     ParentFont = False
     TabOrder = 3
+    OnClick = btnManageTournamentClick
   end
   object btnAdminScreen: TButton
     Left = 8

@@ -24,7 +24,7 @@ type
     Shape13: TShape;
     Shape14: TShape;
     Shape15: TShape;
-    btnRefactored: TButton;
+    btnShowTournament: TButton;
     Shape4: TShape;
     Label1: TLabel;
     Label2: TLabel;
@@ -48,9 +48,11 @@ type
     ComboBox1: TComboBox;
     lblEditMode: TLabel;
     toggleEditMode: TToggleSwitch;
-    procedure btnRefactoredClick(Sender: TObject);
+    procedure btnShowTournamentClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure toggleEditModeClick(Sender: TObject);
+    procedure PlayerLabelClick(Sender: TObject);
   private
     { Private declarations }
     procedure joinShapes(shp1: TShape; shp2: TShape; shp3: TShape);
@@ -64,7 +66,7 @@ var
 
 implementation
 
-uses authentication_u;
+uses authentication_u, manageTournament_u;
 
 function TfrmTournamentView.getFullName(playerID: Integer): String;
 begin
@@ -77,7 +79,7 @@ end;
 
 {$R *.dfm}
 
-procedure TfrmTournamentView.btnRefactoredClick(Sender: TObject);
+procedure TfrmTournamentView.btnShowTournamentClick(Sender: TObject);
 var
   tS1, tS2, tS3: TShape;
   tEditLabel: TLabel;
@@ -108,9 +110,9 @@ begin
       i := i + 2;
 
       // shape colors:
-      tS1.Brush.Color := TColor($00f7a971);
-      tS2.Brush.Color := TColor($00f7a971);
-      tS3.Brush.Color := TColor($00f7a971);
+      tS1.Brush.Color := TColor($00F7A971);
+      tS2.Brush.Color := TColor($00F7A971);
+      tS3.Brush.Color := TColor($00F7A971);
     until (i >= (tournamentsize * 2) - 1);
 
     for i := 1 to ((tournamentsize * 2) - 1) do
@@ -131,7 +133,7 @@ begin
               getFullName(dmTournament.tblGameResults['QuarterFinals' +
               IntToStr(i)]);
             util.alignLabel(tEditLabel);
-            tEditLabel.Font.Color := $007a2346;
+            tEditLabel.Font.Color := $007A2346;
           end;
         9 .. 12:
           begin
@@ -140,7 +142,7 @@ begin
               getFullName(dmTournament.tblGameResults
               ['SemiFinals' + IntToStr(i - 8)]);
             util.alignLabel(tEditLabel);
-            tEditLabel.Font.Color := $00ddddf5;
+            tEditLabel.Font.Color := $00DDDDF5;
           end;
         13 .. 14:
           begin
@@ -149,7 +151,7 @@ begin
               getFullName(dmTournament.tblGameResults
               ['Finals' + IntToStr(i - 12)]);
             util.alignLabel(tEditLabel);
-            tEditLabel.Font.Color := $00a74af8;
+            tEditLabel.Font.Color := $00A74AF8;
           end;
         15:
           begin
@@ -157,7 +159,7 @@ begin
             tEditLabel.Caption :=
               getFullName(dmTournament.tblGameResults['Winner']);
             util.alignLabel(tEditLabel);
-            tEditLabel.Font.Color := TColor($0020972b);
+            tEditLabel.Font.Color := TColor($0076FCF7);
           end;
       end;
 
@@ -253,6 +255,49 @@ begin
     moveY := initialY - (shp3.Height * multiplicationFactor);
   canvas.LineTo(moveX, initialY);
   canvas.LineTo(moveX, moveY);
+end;
+
+procedure TfrmTournamentView.PlayerLabelClick(Sender: TObject);
+begin
+  frmManageTournament.Show;
+  frmManageTournament.FormActivate(Sender);
+end;
+
+procedure TfrmTournamentView.toggleEditModeClick(Sender: TObject);
+begin
+  if toggleEditMode.State = tssOn then
+  begin
+    ShowMessage
+      ('You have entered edit mode. To modify your tournament, click on one of the shapes!');
+
+    // show modifiable tournaments
+    ComboBox1.Clear;
+    dmTournament.tblGames.Filtered := false;
+    dmTournament.tblGames.Filter := 'GameManager = ' +
+      IntToStr(authentication_u.iUserID);
+    dmTournament.tblGames.Filtered := true;
+    dmTournament.tblGames.First;
+    while not dmTournament.tblGames.Eof do
+    begin
+      ComboBox1.Items.Add(dmTournament.tblGames['GameTitle']);
+      dmTournament.tblGames.Next;
+    end;
+    ComboBox1.Refresh;
+
+  end;
+
+  if toggleEditMode.State = tssOff then
+  begin
+    ComboBox1.Clear;
+    dmTournament.tblGames.Filtered := false;
+    dmTournament.tblGames.First;
+    while not dmTournament.tblGames.Eof do
+    begin
+      ComboBox1.Items.Add(dmTournament.tblGames['GameTitle']);
+      dmTournament.tblGames.Next;
+    end;
+    ComboBox1.Refresh;
+  end;
 end;
 
 end.
