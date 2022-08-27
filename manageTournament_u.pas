@@ -21,6 +21,7 @@ type
     PaintBox1: TPaintBox;
     procedure FormActivate(Sender: TObject);
     procedure PaintBox1Paint(Sender: TObject);
+    procedure btnUpdateClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -30,14 +31,62 @@ type
 var
   frmManageTournament: TfrmManageTournament;
   sLabelType: String;
+  lblClickedLabel: TLabel;
 
 implementation
 
 {$R *.dfm}
 
+procedure TfrmManageTournament.btnUpdateClick(Sender: TObject);
+var
+  sField, sName, sSurname, sComboBoxText: String;
+  iPlayerID: Integer;
+begin
+  { get field to edit in DB (label type + last character of name (which is a number))
+    eg: SemiFinals - label type; '3' - last character = SemiFinals3
+  }
+  dmTournament.tblGameResults.Edit;
+  if not(sLabelType = 'Winner') then
+  begin
+    sField := sLabelType + lblClickedLabel.Name[Length(lblClickedLabel.Name)];
+    ShowMessage(sField);
+  end
+  else
+    sField := 'Winner';
+
+  {
+    Locate player;
+    Store results in appropriate field!
+  }
+  sComboBoxText := cmbPlayersToPick.Text;
+  sName := Copy(sComboBoxText, 1, Pos(' ', sComboBoxText) - 1);
+  Delete(sComboBoxText, 1, Pos(' ', sComboBoxText));
+  sSurname := sComboBoxText;
+  dmTournament.tblPlayers.Locate('FirstName; LastName',
+    VarArrayOf([sName, sSurname]), []);
+  dmTournament.tblGameResults[sField] := dmTournament.tblPlayers['PlayerID'];
+  dmTournament.tblGameResults.Post;
+
+  // if the user chose the winner, store in db in dedicated fields.
+  if sLabelType = 'Winner' then
+  begin
+    dmTournament.tblPlayers.Edit;
+    dmTournament.tblPlayers['GamesWon'] := dmTournament.tblPlayers
+      ['GamesWon'] + 1;
+    dmTournament.tblPlayers.Post;
+    dmTournament.tblGames.Locate('GameID', dmTournament.tblGameResults
+      ['GameID'], []);
+    dmTournament.tblGames.Edit;
+    dmTournament.tblGames['WinningPlayer'] := dmTournament.tblPlayers
+      ['PlayerID'];
+    dmTournament.tblGames.Post;
+  end;
+  ShowMessage('Updated tournament successfully!');
+end;
+
 procedure TfrmManageTournament.FormActivate(Sender: TObject);
 var
-  lblClickedLabel, lblLink1, lblLink2: TLabel;
+  lblLink1, lblLink2: TLabel;
   i: Integer;
 begin
   // paint box init
@@ -47,10 +96,11 @@ begin
   PaintBox1.canvas.Pen.Color := clBlue;
   PaintBox1.canvas.Pen.Width := 3;
 
+  // tell user which bracket they are working with + player
   lblClickedLabel := TLabel(Sender);
   lblEditing.Caption := 'You are editing: ' + lblClickedLabel.Caption + ' (' +
     lblClickedLabel.Name + ')';
-
+  // get current label
   case lblClickedLabel.Name[1] of
     'Q':
       sLabelType := 'QuarterFinals';
@@ -64,6 +114,7 @@ begin
 
   if sLabelType = 'QuarterFinals' then
   begin
+    // hide shapes for quarter finals + center combobox because there are no brackets before it
     Shape1.Hide;
     Shape2.Hide;
     Player1.Hide;
@@ -130,6 +181,7 @@ begin
     lblLink2 := TLabel(frmTournamentView.FindComponent('F2'));
   end;
 
+  // set captions to the player names + align in center
   Player1.Caption := lblLink1.Caption;
   Player2.Caption := lblLink2.Caption;
   util.alignLabel(Player1);
@@ -161,7 +213,7 @@ end;
 procedure TfrmManageTournament.PaintBox1Paint(Sender: TObject);
 begin
   // draw lines!
-  if not (sLabelType = 'QuarterFinals') then
+  if not(sLabelType = 'QuarterFinals') then
   begin
     PaintBox1.canvas.MoveTo(127, 106);
     PaintBox1.canvas.LineTo(179, 106);

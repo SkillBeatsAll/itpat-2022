@@ -184,18 +184,23 @@ begin
   end;
   ComboBox1.Refresh;
 
-  if (authentication_u.iUserLevel = 2) or (authentication_u.iUserLevel = 3) then
+  if not(toggleEditMode.State = tssOn) then
   begin
-    lblEditMode.Visible := true;
-    toggleEditMode.State := tssOff;
-    toggleEditMode.Visible := true;
-  end
-  else if authentication_u.iUserLevel = 1 then
-  begin
-    lblEditMode.Visible := false;
-    toggleEditMode.State := tssOff;
-    toggleEditMode.Visible := false;
+    if (authentication_u.iUserLevel = 2) or (authentication_u.iUserLevel = 3)
+    then
+    begin
+      lblEditMode.Visible := true;
+      toggleEditMode.State := tssOff;
+      toggleEditMode.Visible := true;
+    end
+    else if authentication_u.iUserLevel = 1 then
+    begin
+      lblEditMode.Visible := false;
+      toggleEditMode.State := tssOff;
+      toggleEditMode.Visible := false;
+    end;
   end;
+
 end;
 
 procedure TfrmTournamentView.FormClose(Sender: TObject;
@@ -259,8 +264,17 @@ end;
 
 procedure TfrmTournamentView.PlayerLabelClick(Sender: TObject);
 begin
-  frmManageTournament.Show;
-  frmManageTournament.FormActivate(Sender);
+  if toggleEditMode.State = tssOn then
+  begin
+  if not (combobox1.Text = '') then
+  begin
+    frmManageTournament.Show;
+    frmManageTournament.FormActivate(Sender);
+  end
+  else begin
+    ShowMessage('Please select a tournament that you want to edit first.');
+  end;
+  end;
 end;
 
 procedure TfrmTournamentView.toggleEditModeClick(Sender: TObject);

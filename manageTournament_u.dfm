@@ -100,5 +100,6 @@ object frmManageTournament: TfrmManageTournament
     Height = 41
     Caption = 'Update Tournament'
     TabOrder = 1
+    OnClick = btnUpdateClick
   end
 end
