@@ -54,19 +54,17 @@ begin
     ShowMessage('Make sure that you have 8 players in your tournament!');
   end
   else if lstInTournament.Items.Count = 8 then
-
   begin
+    if not dmTournament.tblGames.Locate('GameTitle', edtTournamentName.Text, []) then
+    begin
     // write to DB
     dmTournament.tblGames.Append;
     dmTournament.tblGames['GameTitle'] := edtTournamentName.Text;
     dmTournament.tblGames['InitiatedAt'] := startDate.Date;
     dmTournament.tblGames['PlayerCount'] := 8;
 
-    // get current logged in user's userID + store as game manager
-    dmTournament.tblCredentials.Locate('Username',
-      authentication_u.sUsername, []);
-    dmTournament.tblGames['GameManager'] := dmTournament.tblCredentials
-      ['UserID'];
+    // get current logged in user's userID from auth form + store as game manager
+    dmTournament.tblGames['GameManager'] := authentication_u.iUserID;
 
     // populate players fields
     for i := 0 to lstInTournament.Items.Count - 1 do
@@ -89,6 +87,8 @@ begin
     dmTournament.tblGameResults.Post;
 
     ShowMessage('Created your tournament!');
+    end
+    else ShowMessage('This tournament name is already taken!')
   end;
 end;
 

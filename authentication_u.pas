@@ -34,7 +34,7 @@ type
 var
   frmAuthentication: TfrmAuthentication;
   sOTP, sUsername, sPassword: String;
-  iUserLevel: Integer;
+  iUserLevel, iUserID: Integer;
 
 implementation
 
@@ -52,6 +52,7 @@ begin
     (dmTournament.tblCredentials['Password'] = edtPassword.Text) then
   begin
     iUserLevel := dmTournament.tblCredentials['UserLevel'];
+    iUserID := dmTournament.tblCredentials['UserID'];
     sUsername := dmTournament.tblCredentials['Username'];
     if (iUserLevel = 2) or (iUserLevel = 3) then
     begin
