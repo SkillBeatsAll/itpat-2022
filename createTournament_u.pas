@@ -20,6 +20,8 @@ type
     Label3: TLabel;
     edtPlayers: TEdit;
     btnCreateTournament: TButton;
+    edtTimeMinutes: TEdit;
+    Label4: TLabel;
     procedure FormActivate(Sender: TObject);
     procedure lstInTournamentDragOver(Sender, Source: TObject; X, Y: Integer;
       State: TDragState; var Accept: Boolean);
@@ -62,6 +64,7 @@ begin
     dmTournament.tblGames['GameTitle'] := edtTournamentName.Text;
     dmTournament.tblGames['InitiatedAt'] := startDate.Date;
     dmTournament.tblGames['PlayerCount'] := 8;
+    dmTournament.tblGames['TimePerMatch'] := StrToInt(edtTimeMinutes.Text);
 
     // get current logged in user's userID from auth form + store as game manager
     dmTournament.tblGames['GameManager'] := authentication_u.iUserID;

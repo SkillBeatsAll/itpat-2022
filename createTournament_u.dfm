@@ -3,7 +3,7 @@ object frmCreateTournament: TfrmCreateTournament
   Top = 0
   Caption = 'Create a tournament | TournyMan'
   ClientHeight = 420
-  ClientWidth = 426
+  ClientWidth = 470
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -23,23 +23,30 @@ object frmCreateTournament: TfrmCreateTournament
     Caption = 'Tournament Name:'
   end
   object Label2: TLabel
-    Left = 176
+    Left = 160
     Top = 8
     Width = 86
     Height = 15
     Caption = 'Select start date:'
   end
   object Label3: TLabel
-    Left = 352
-    Top = 8
+    Left = 280
+    Top = 10
     Width = 40
     Height = 15
     Caption = 'Players:'
   end
+  object Label4: TLabel
+    Left = 350
+    Top = 10
+    Width = 108
+    Height = 15
+    Caption = 'Time per Match (m):'
+  end
   object GroupBox1: TGroupBox
     Left = 6
     Top = 80
-    Width = 412
+    Width = 459
     Height = 297
     Caption = 'Select players for your tournament'
     TabOrder = 3
@@ -53,9 +60,9 @@ object frmCreateTournament: TfrmCreateTournament
     TabOrder = 0
   end
   object lstInTournament: TListBox
-    Left = 224
+    Left = 248
     Top = 120
-    Width = 183
+    Width = 207
     Height = 246
     DragMode = dmAutomatic
     ItemHeight = 15
@@ -66,7 +73,7 @@ object frmCreateTournament: TfrmCreateTournament
   object lstPlayers: TListBox
     Left = 16
     Top = 120
-    Width = 183
+    Width = 209
     Height = 246
     DragMode = dmAutomatic
     ItemHeight = 15
@@ -75,7 +82,7 @@ object frmCreateTournament: TfrmCreateTournament
     OnDragOver = lstPlayersDragOver
   end
   object startDate: TDateTimePicker
-    Left = 176
+    Left = 160
     Top = 31
     Width = 97
     Height = 23
@@ -84,8 +91,8 @@ object frmCreateTournament: TfrmCreateTournament
     TabOrder = 4
   end
   object edtPlayers: TEdit
-    Left = 352
-    Top = 29
+    Left = 280
+    Top = 31
     Width = 55
     Height = 23
     Enabled = False
@@ -95,10 +102,19 @@ object frmCreateTournament: TfrmCreateTournament
   object btnCreateTournament: TButton
     Left = 6
     Top = 383
-    Width = 412
+    Width = 459
     Height = 34
     Caption = 'Create Tournament'
     TabOrder = 6
     OnClick = btnCreateTournamentClick
+  end
+  object edtTimeMinutes: TEdit
+    Left = 352
+    Top = 31
+    Width = 55
+    Height = 23
+    NumbersOnly = True
+    TabOrder = 7
+    TextHint = 'minutes'
   end
 end
