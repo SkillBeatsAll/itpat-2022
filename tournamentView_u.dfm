@@ -1,6 +1,8 @@
 object frmTournamentView: TfrmTournamentView
   Left = 0
   Top = 0
+  BorderIcons = [biSystemMenu, biMinimize]
+  BorderStyle = bsSingle
   Caption = 'Tournament Viewer | TournyMan'
   ClientHeight = 466
   ClientWidth = 787

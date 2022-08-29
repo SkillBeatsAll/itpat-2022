@@ -1,7 +1,9 @@
 object frmRegistration: TfrmRegistration
   Left = 0
   Top = 0
-  Caption = 'Register | Tournament Manager'
+  BorderIcons = [biSystemMenu, biMinimize]
+  BorderStyle = bsSingle
+  Caption = 'Register | TournyMan'
   ClientHeight = 310
   ClientWidth = 288
   Color = clSkyBlue

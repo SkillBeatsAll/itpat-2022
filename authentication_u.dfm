@@ -1,6 +1,8 @@
 object frmAuthentication: TfrmAuthentication
   Left = 0
   Top = 0
+  BorderIcons = [biSystemMenu, biMinimize]
+  BorderStyle = bsSingle
   Caption = 'Authentication | TournyMan'
   ClientHeight = 293
   ClientWidth = 399
@@ -26,28 +28,28 @@ object frmAuthentication: TfrmAuthentication
     Left = 100
     Top = 107
     Width = 56
-    Height = 16
+    Height = 15
     Caption = 'Username:'
   end
   object Label2: TLabel
     Left = 100
     Top = 147
     Width = 53
-    Height = 16
+    Height = 15
     Caption = 'Password:'
   end
   object Label3: TLabel
     Left = 100
     Top = 184
     Width = 80
-    Height = 16
+    Height = 15
     Caption = 'Not registered?'
   end
   object lblRegisterRedirect: TLabel
     Left = 188
     Top = 184
     Width = 96
-    Height = 16
+    Height = 15
     Cursor = crHandPoint
     Caption = 'Create an account'
     Font.Charset = DEFAULT_CHARSET

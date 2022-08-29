@@ -1,6 +1,8 @@
 object frmMainMenu: TfrmMainMenu
   Left = 0
   Top = 0
+  BorderIcons = [biSystemMenu, biMinimize]
+  BorderStyle = bsSingle
   Caption = 'Main Menu | TournyMan'
   ClientHeight = 284
   ClientWidth = 286

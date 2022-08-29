@@ -1,6 +1,8 @@
 object frmAuthHelp: TfrmAuthHelp
   Left = 0
   Top = 0
+  BorderIcons = [biSystemMenu, biMinimize]
+  BorderStyle = bsSingle
   Caption = '2 Factor Authentication | TournyMan'
   ClientHeight = 412
   ClientWidth = 572
