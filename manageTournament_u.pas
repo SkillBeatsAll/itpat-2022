@@ -49,7 +49,6 @@ begin
   if not(sLabelType = 'Winner') then
   begin
     sField := sLabelType + lblClickedLabel.Name[Length(lblClickedLabel.Name)];
-    ShowMessage(sField);
   end
   else
     sField := 'Winner';
@@ -82,6 +81,9 @@ begin
     dmTournament.tblGames.Post;
   end;
   ShowMessage('Updated tournament successfully!');
+
+  // redisplay tournament by simulating a button click
+  frmTournamentView.btnShowTournamentClick(Self);
 end;
 
 procedure TfrmManageTournament.FormActivate(Sender: TObject);

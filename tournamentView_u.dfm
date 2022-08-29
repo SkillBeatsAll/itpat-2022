@@ -142,12 +142,12 @@ object frmTournamentView: TfrmTournamentView
   object Label1: TLabel
     Left = 8
     Top = 8
-    Width = 98
-    Height = 21
+    Width = 121
+    Height = 28
     Caption = 'Quarter Finals'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clNavy
-    Font.Height = -16
+    Font.Height = -20
     Font.Name = 'Segoe UI'
     Font.Style = []
     ParentFont = False
@@ -155,12 +155,12 @@ object frmTournamentView: TfrmTournamentView
   object Label2: TLabel
     Left = 224
     Top = 8
-    Width = 79
-    Height = 21
+    Width = 97
+    Height = 28
     Caption = 'Semi Finals'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clNavy
-    Font.Height = -16
+    Font.Height = -20
     Font.Name = 'Segoe UI'
     Font.Style = []
     ParentFont = False
@@ -168,12 +168,12 @@ object frmTournamentView: TfrmTournamentView
   object Label3: TLabel
     Left = 440
     Top = 8
-    Width = 40
-    Height = 21
+    Width = 49
+    Height = 28
     Caption = 'Finals'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clNavy
-    Font.Height = -16
+    Font.Height = -20
     Font.Name = 'Segoe UI'
     Font.Style = []
     ParentFont = False
@@ -181,12 +181,12 @@ object frmTournamentView: TfrmTournamentView
   object Label4: TLabel
     Left = 656
     Top = 8
-    Width = 51
-    Height = 21
+    Width = 63
+    Height = 28
     Caption = 'Winner'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clNavy
-    Font.Height = -16
+    Font.Height = -20
     Font.Name = 'Segoe UI'
     Font.Style = []
     ParentFont = False
@@ -469,10 +469,10 @@ object frmTournamentView: TfrmTournamentView
     OnClick = btnExportTournamentClick
   end
   object redOutput: TRichEdit
-    Left = 672
-    Top = 302
-    Width = 99
-    Height = 89
+    Left = 744
+    Top = 358
+    Width = 27
+    Height = 33
     Font.Charset = ANSI_CHARSET
     Font.Color = clWindowText
     Font.Height = -12
@@ -481,5 +481,15 @@ object frmTournamentView: TfrmTournamentView
     ParentFont = False
     TabOrder = 4
     Visible = False
+  end
+  object btnDeleteTournament: TButton
+    Left = 216
+    Top = 440
+    Width = 114
+    Height = 25
+    Caption = 'Delete Tournament'
+    TabOrder = 5
+    Visible = False
+    OnClick = btnDeleteTournamentClick
   end
 end

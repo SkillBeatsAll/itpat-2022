@@ -51,12 +51,14 @@ type
     toggleEditMode: TToggleSwitch;
     btnExportTournament: TButton;
     redOutput: TRichEdit;
+    btnDeleteTournament: TButton;
     procedure btnShowTournamentClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure toggleEditModeClick(Sender: TObject);
     procedure PlayerLabelClick(Sender: TObject);
     procedure btnExportTournamentClick(Sender: TObject);
+    procedure btnDeleteTournamentClick(Sender: TObject);
   private
     { Private declarations }
     procedure joinShapes(shp1: TShape; shp2: TShape; shp3: TShape);
@@ -82,6 +84,31 @@ begin
 end;
 
 {$R *.dfm}
+
+procedure TfrmTournamentView.btnDeleteTournamentClick(Sender: TObject);
+var
+  iGameID: Integer;
+begin
+  if messagedlg('Are you sure?', mtConfirmation, mbYesNo, 0) = mrYes then
+  begin
+    { delete tournament button:
+      1)  find game id by finding game title
+      2)  store game id in variable
+      3)  delete record from tblGames
+      4)  locate + delete record from tblGameResults
+      5)  output :D
+    }
+    dmTournament.tblGames.Locate('GameID',
+      dmTournament.tblGames.Locate('GameTitle', ComboBox1.Text, []), []);
+    iGameID := dmTournament.tblGames['GameID'];
+    dmTournament.tblGames.Delete;
+
+    dmTournament.tblGameResults.Locate('GameID', iGameID, []);
+    dmTournament.tblGameResults.Delete;
+
+    ShowMessage('Deleted the tournament!');
+  end;
+end;
 
 procedure TfrmTournamentView.btnExportTournamentClick(Sender: TObject);
 var
@@ -170,7 +197,7 @@ begin
         1) The caption is set to the player's full name, or "TBD" if its not yet entered
         2) The label is aligned horizontally in the center
         3) The label is aligned vertically in the center
-        4) Color set to light green
+        4) Color set to one of four colors.
 
         Note: 2 and 3 are performed by a utility function under util_u.
       }
@@ -224,29 +251,33 @@ end;
 
 procedure TfrmTournamentView.FormActivate(Sender: TObject);
 begin
-  ComboBox1.Clear;
-  dmTournament.tblGames.First;
-  while not dmTournament.tblGames.Eof do
-  begin
-    ComboBox1.Items.Add(dmTournament.tblGames['GameTitle']);
-    dmTournament.tblGames.Next;
-  end;
-  ComboBox1.Refresh;
-
+  // if user was not already editing the form (used so it doesnt reset if user comes back from managing tournament)
   if not(toggleEditMode.State = tssOn) then
   begin
+    { clear combobox and populate with tournaments }
+    ComboBox1.Clear;
+    dmTournament.tblGames.First;
+    while not dmTournament.tblGames.Eof do
+    begin
+      ComboBox1.Items.Add(dmTournament.tblGames['GameTitle']);
+      dmTournament.tblGames.Next;
+    end;
+    ComboBox1.Refresh;
+
     if (authentication_u.iUserLevel = 2) or (authentication_u.iUserLevel = 3)
     then
     begin
       lblEditMode.Visible := true;
       toggleEditMode.State := tssOff;
       toggleEditMode.Visible := true;
+      btnDeleteTournament.Visible := false;
     end
     else if authentication_u.iUserLevel = 1 then
     begin
       lblEditMode.Visible := false;
       toggleEditMode.State := tssOff;
       toggleEditMode.Visible := false;
+      btnDeleteTournament.Visible := false;
     end;
   end;
 
@@ -348,6 +379,7 @@ begin
     end;
     ComboBox1.Refresh;
 
+    btnDeleteTournament.Visible := true;
   end;
 
   if toggleEditMode.State = tssOff then
@@ -361,6 +393,8 @@ begin
       dmTournament.tblGames.Next;
     end;
     ComboBox1.Refresh;
+
+    btnDeleteTournament.Visible := false;
   end;
 end;
 
