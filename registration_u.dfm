@@ -77,7 +77,7 @@ object frmRegistration: TfrmRegistration
       'Spectator'
       'Manager')
     ParentFont = False
-    TabOrder = 0
+    TabOrder = 3
   end
   object btnRegister: TButton
     Left = 8
@@ -91,7 +91,7 @@ object frmRegistration: TfrmRegistration
     Font.Name = 'Segoe UI'
     Font.Style = []
     ParentFont = False
-    TabOrder = 1
+    TabOrder = 4
     OnClick = btnRegisterClick
   end
   object edtUsername: TEdit
@@ -99,7 +99,7 @@ object frmRegistration: TfrmRegistration
     Top = 23
     Width = 121
     Height = 23
-    TabOrder = 2
+    TabOrder = 0
   end
   object edtPassword: TEdit
     Left = 148
@@ -107,7 +107,7 @@ object frmRegistration: TfrmRegistration
     Width = 121
     Height = 23
     PasswordChar = '*'
-    TabOrder = 3
+    TabOrder = 1
   end
   object edtConfirmPassword: TEdit
     Left = 148
@@ -115,6 +115,6 @@ object frmRegistration: TfrmRegistration
     Width = 121
     Height = 23
     PasswordChar = '*'
-    TabOrder = 4
+    TabOrder = 2
   end
 end
