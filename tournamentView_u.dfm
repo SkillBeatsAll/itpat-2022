@@ -459,4 +459,27 @@ object frmTournamentView: TfrmTournamentView
     TabOrder = 2
     OnClick = toggleEditModeClick
   end
+  object btnExportTournament: TButton
+    Left = 336
+    Top = 440
+    Width = 114
+    Height = 25
+    Caption = 'Export Tournament'
+    TabOrder = 3
+    OnClick = btnExportTournamentClick
+  end
+  object redOutput: TRichEdit
+    Left = 672
+    Top = 302
+    Width = 99
+    Height = 89
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -12
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 4
+    Visible = False
+  end
 end

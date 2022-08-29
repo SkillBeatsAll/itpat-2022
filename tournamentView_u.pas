@@ -6,7 +6,8 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
   System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.DBCtrls,
-  dbmTournament, util_u, mainMenu_u, Vcl.WinXCtrls, System.UITypes;
+  dbmTournament, util_u, mainMenu_u, Vcl.WinXCtrls, System.UITypes,
+  Vcl.ComCtrls, ShellAPI;
 
 type
   TfrmTournamentView = class(TForm)
@@ -48,11 +49,14 @@ type
     ComboBox1: TComboBox;
     lblEditMode: TLabel;
     toggleEditMode: TToggleSwitch;
+    btnExportTournament: TButton;
+    redOutput: TRichEdit;
     procedure btnShowTournamentClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure toggleEditModeClick(Sender: TObject);
     procedure PlayerLabelClick(Sender: TObject);
+    procedure btnExportTournamentClick(Sender: TObject);
   private
     { Private declarations }
     procedure joinShapes(shp1: TShape; shp2: TShape; shp3: TShape);
@@ -78,6 +82,51 @@ begin
 end;
 
 {$R *.dfm}
+
+procedure TfrmTournamentView.btnExportTournamentClick(Sender: TObject);
+var
+  sFile: String;
+begin
+  redOutput.Clear;
+  redOutput.Paragraph.TabCount := 1;
+  redOutput.Paragraph.Tab[0] := 100;
+  with dmTournament.tblGames do
+  begin
+    Locate('GameTitle', ComboBox1.Text, []);
+    redOutput.Lines.Add('Game Title' + #9 + '| ' + FieldByName('GameTitle')
+      .AsString);
+    redOutput.Lines.Add('Time Per Match' + #9 + '| ' +
+      FieldByName('TimePerMatch').AsString);
+    redOutput.Lines.Add('Initiated At' + #9 + '| ' + FieldByName('InitiatedAt')
+      .AsString);
+    redOutput.Lines.Add('Player Count' + #9 + '| ' + FieldByName('PlayerCount')
+      .AsString);
+    redOutput.Lines.Add('Player 1' + #9 + '| ' +
+      getFullName(FieldByName('Player1').AsInteger));
+    redOutput.Lines.Add('Player 2' + #9 + '| ' +
+      getFullName(FieldByName('Player2').AsInteger));
+    redOutput.Lines.Add('Player 3' + #9 + '| ' +
+      getFullName(FieldByName('Player3').AsInteger));
+    redOutput.Lines.Add('Player 4' + #9 + '| ' +
+      getFullName(FieldByName('Player4').AsInteger));
+    redOutput.Lines.Add('Player 5' + #9 + '| ' +
+      getFullName(FieldByName('Player5').AsInteger));
+    redOutput.Lines.Add('Player 6' + #9 + '| ' +
+      getFullName(FieldByName('Player6').AsInteger));
+    redOutput.Lines.Add('Player 7' + #9 + '| ' +
+      getFullName(FieldByName('Player7').AsInteger));
+    redOutput.Lines.Add('Player 8' + #9 + '| ' +
+      getFullName(FieldByName('Player8').AsInteger));
+    redOutput.Lines.Add('Winner' + #9 + '| ' +
+      getFullName(FieldByName('WinningPlayer').AsInteger));
+
+    sFile := ComboBox1.Text + '.rtf';
+    redOutput.Lines.SaveToFile(sFile);
+    ShowMessage('Exported tournament to: ' + sFile);
+    ShellExecute(Handle, 'open', pChar(sFile), nil, nil, SW_SHOWNORMAL);
+  end;
+
+end;
 
 procedure TfrmTournamentView.btnShowTournamentClick(Sender: TObject);
 var
@@ -266,14 +315,15 @@ procedure TfrmTournamentView.PlayerLabelClick(Sender: TObject);
 begin
   if toggleEditMode.State = tssOn then
   begin
-  if not (combobox1.Text = '') then
-  begin
-    frmManageTournament.Show;
-    frmManageTournament.FormActivate(Sender);
-  end
-  else begin
-    ShowMessage('Please select a tournament that you want to edit first.');
-  end;
+    if not(ComboBox1.Text = '') then
+    begin
+      frmManageTournament.Show;
+      frmManageTournament.FormActivate(Sender);
+    end
+    else
+    begin
+      ShowMessage('Please select a tournament that you want to edit first.');
+    end;
   end;
 end;
 
