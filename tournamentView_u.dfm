@@ -12,13 +12,14 @@ object frmTournamentView: TfrmTournamentView
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  OldCreateOrder = True
   Position = poMainFormCenter
   OnActivate = FormActivate
   OnClose = FormClose
-  PixelsPerInch = 96
   DesignSize = (
     787
     466)
+  PixelsPerInch = 96
   TextHeight = 15
   object Shape1: TShape
     Left = 8
@@ -483,6 +484,7 @@ object frmTournamentView: TfrmTournamentView
     ParentFont = False
     TabOrder = 4
     Visible = False
+    Zoom = 100
   end
   object btnDeleteTournament: TButton
     Left = 216
