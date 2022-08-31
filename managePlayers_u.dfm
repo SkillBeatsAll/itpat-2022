@@ -4,7 +4,7 @@ object frmManagePlayers: TfrmManagePlayers
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Manage Players | TournyMan'
-  ClientHeight = 464
+  ClientHeight = 508
   ClientWidth = 373
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -12,6 +12,7 @@ object frmManagePlayers: TfrmManagePlayers
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  OldCreateOrder = True
   Position = poMainFormCenter
   OnClose = FormClose
   PixelsPerInch = 96
@@ -73,7 +74,6 @@ object frmManagePlayers: TfrmManagePlayers
       EditLabel.Caption = 'First Name:'
       LabelPosition = lpLeft
       TabOrder = 0
-      Text = ''
     end
     object ledtLastName: TLabeledEdit
       Left = 75
@@ -85,7 +85,6 @@ object frmManagePlayers: TfrmManagePlayers
       EditLabel.Caption = 'Last Name:'
       LabelPosition = lpLeft
       TabOrder = 1
-      Text = ''
     end
     object btnAddPlayer: TButton
       Left = 224
@@ -122,7 +121,6 @@ object frmManagePlayers: TfrmManagePlayers
       LabelPosition = lpLeft
       ReadOnly = True
       TabOrder = 0
-      Text = ''
     end
     object ledtShowLastName: TLabeledEdit
       Left = 75
@@ -135,7 +133,6 @@ object frmManagePlayers: TfrmManagePlayers
       LabelPosition = lpLeft
       ReadOnly = True
       TabOrder = 1
-      Text = ''
     end
     object ledtShowPlayerID: TLabeledEdit
       Left = 75
@@ -149,7 +146,6 @@ object frmManagePlayers: TfrmManagePlayers
       LabelPosition = lpLeft
       ReadOnly = True
       TabOrder = 2
-      Text = ''
     end
     object ledtShowGamesWon: TLabeledEdit
       Left = 299
@@ -163,7 +159,6 @@ object frmManagePlayers: TfrmManagePlayers
       LabelPosition = lpLeft
       ReadOnly = True
       TabOrder = 3
-      Text = ''
     end
     object btnDeletePlayer: TButton
       Left = 224
@@ -174,5 +169,38 @@ object frmManagePlayers: TfrmManagePlayers
       TabOrder = 4
       OnClick = btnDeletePlayerClick
     end
+  end
+  object btnExportPlayers: TButton
+    Left = 192
+    Top = 462
+    Width = 173
+    Height = 41
+    Caption = 'Export Players'
+    TabOrder = 3
+    OnClick = btnExportPlayersClick
+  end
+  object redOutput: TRichEdit
+    Left = 248
+    Top = 337
+    Width = 42
+    Height = 16
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -12
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 4
+    Visible = False
+    Zoom = 100
+  end
+  object btnImportPlayers: TButton
+    Left = 8
+    Top = 462
+    Width = 178
+    Height = 41
+    Caption = 'Import Players'
+    TabOrder = 5
+    OnClick = btnExportPlayersClick
   end
 end

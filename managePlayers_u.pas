@@ -7,7 +7,8 @@ uses
   System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Vcl.Grids, Vcl.DBGrids,
   dbmTournament,
-  Vcl.StdCtrls, Vcl.Mask, Vcl.ExtCtrls, mainMenu_u, util_u;
+  Vcl.StdCtrls, Vcl.Mask, Vcl.ExtCtrls, mainMenu_u, util_u, Vcl.ComCtrls,
+  tournamentView_u, ShellAPI;
 
 type
   TfrmManagePlayers = class(TForm)
@@ -23,10 +24,14 @@ type
     ledtShowGamesWon: TLabeledEdit;
     btnDeletePlayer: TButton;
     Label1: TLabel;
+    btnExportPlayers: TButton;
+    redOutput: TRichEdit;
+    btnImportPlayers: TButton;
     procedure btnAddPlayerClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure DBGrid1CellClick(Column: TColumn);
     procedure btnDeletePlayerClick(Sender: TObject);
+    procedure btnExportPlayersClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -57,6 +62,35 @@ begin
   begin
     dmTournament.tblPlayers.Delete;
     ShowMessage('Deleted the player!');
+  end;
+end;
+
+procedure TfrmManagePlayers.btnExportPlayersClick(Sender: TObject);
+var
+  sFile: String;
+begin
+  // redoutput initialization
+  redOutput.Clear;
+  redOutput.Paragraph.TabCount := 1;
+  redOutput.Paragraph.Tab[0] := 200;
+  redOutput.Lines.Add('Player Name'#9'Games Won');
+  redOutput.Lines.Add
+    ('----------------------------------------------------------------------');
+
+  dmTournament.tblPlayers.First;
+  with dmTournament.tblPlayers do
+  begin
+    while not Eof do
+    begin
+      redOutput.Lines.Add(frmTournamentView.getFullName(FieldByName('PlayerID')
+        .AsInteger) + #9 + FieldByName('GamesWon').AsString);
+      next;
+    end;
+    sFile := 'PlayersList.rtf';
+    redOutput.Lines.SaveToFile(sFile);
+    ShowMessage('Exported tournament to: ' + sFile);
+    ShellExecute(Handle, 'open', pChar(sFile), nil, nil, SW_SHOWNORMAL);
+
   end;
 end;
 
