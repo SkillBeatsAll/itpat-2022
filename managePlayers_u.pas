@@ -32,6 +32,7 @@ type
     procedure DBGrid1CellClick(Column: TColumn);
     procedure btnDeletePlayerClick(Sender: TObject);
     procedure btnExportPlayersClick(Sender: TObject);
+    procedure btnImportPlayersClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -91,6 +92,28 @@ begin
     ShowMessage('Exported tournament to: ' + sFile);
     ShellExecute(Handle, 'open', pChar(sFile), nil, nil, SW_SHOWNORMAL);
 
+  end;
+end;
+
+procedure TfrmManagePlayers.btnImportPlayersClick(Sender: TObject);
+var
+  sFile: string;
+  dialogSelectFile: TOpenDialog;
+begin
+  sFile := '';
+  dialogSelectFile := TOpenDialog.Create(nil);
+  try
+    dialogSelectFile.InitialDir := 'C:\';
+    dialogSelectFile.Filter := 'Players List (*.csv,*.txt)|*.csv;*.txt';
+    if dialogSelectFile.Execute(Handle) then
+      sFile := dialogSelectFile.FileName;
+  finally
+    dialogSelectFile.Free;
+  end;
+
+  if sFile <> '' then
+  begin
+    ShowMessage(sFile);
   end;
 end;
 

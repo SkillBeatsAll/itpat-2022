@@ -201,6 +201,6 @@ object frmManagePlayers: TfrmManagePlayers
     Height = 41
     Caption = 'Import Players'
     TabOrder = 5
-    OnClick = btnExportPlayersClick
+    OnClick = btnImportPlayersClick
   end
 end
