@@ -8,7 +8,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Vcl.Grids, Vcl.DBGrids,
   dbmTournament,
   Vcl.StdCtrls, Vcl.Mask, Vcl.ExtCtrls, mainMenu_u, util_u, Vcl.ComCtrls,
-  tournamentView_u, ShellAPI;
+  tournamentView_u, ShellAPI, StrUtils;
 
 type
   TfrmManagePlayers = class(TForm)
@@ -97,24 +97,48 @@ end;
 
 procedure TfrmManagePlayers.btnImportPlayersClick(Sender: TObject);
 var
-  sFile: string;
   dialogSelectFile: TOpenDialog;
+  sStringsList: TStringList;
+  i: Integer;
+  sFirstName, sLastName: String;
 begin
-  sFile := '';
   dialogSelectFile := TOpenDialog.Create(nil);
+  sStringsList := TStringList.Create();
+  ShowMessage
+    ('You can import a file with the following format: ''firstname,lastname''');
+  // let user choose file + load file into stringslist
   try
     dialogSelectFile.InitialDir := 'C:\';
     dialogSelectFile.Filter := 'Players List (*.csv,*.txt)|*.csv;*.txt';
     if dialogSelectFile.Execute(Handle) then
-      sFile := dialogSelectFile.FileName;
+    begin
+      // load textfile into stringslist
+      sStringsList.LoadFromFile(dialogSelectFile.FileName);
+    end;
   finally
     dialogSelectFile.Free;
   end;
 
-  if sFile <> '' then
+  if sStringsList.Count <> 0 then
   begin
-    ShowMessage(sFile);
+    for i := 0 to sStringsList.Count - 1 do
+    begin
+      // get first + last name from delimited string
+      sFirstName := SplitString(sStringsList.Strings[i], ',')[0];
+      sLastName := SplitString(sStringsList.Strings[i], ',')[1];
+
+      // write to DB
+      dmTournament.tblPlayers.Append;
+      dmTournament.tblPlayers['FirstName'] := sFirstName;
+      dmTournament.tblPlayers['LastName'] := sLastName;
+      dmTournament.tblPlayers['GamesWon'] := 0;
+      dmTournament.tblPlayers.Post;
+    end;
+
+    ShowMessage('Successfully imported ' + IntToStr(sStringsList.Count) +
+      ' players!');
   end;
+  sStringsList.Free;
 end;
 
 procedure TfrmManagePlayers.DBGrid1CellClick(Column: TColumn);

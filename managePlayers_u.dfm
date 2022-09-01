@@ -12,7 +12,6 @@ object frmManagePlayers: TfrmManagePlayers
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
-  OldCreateOrder = True
   Position = poMainFormCenter
   OnClose = FormClose
   PixelsPerInch = 96
@@ -74,6 +73,7 @@ object frmManagePlayers: TfrmManagePlayers
       EditLabel.Caption = 'First Name:'
       LabelPosition = lpLeft
       TabOrder = 0
+      Text = ''
     end
     object ledtLastName: TLabeledEdit
       Left = 75
@@ -85,6 +85,7 @@ object frmManagePlayers: TfrmManagePlayers
       EditLabel.Caption = 'Last Name:'
       LabelPosition = lpLeft
       TabOrder = 1
+      Text = ''
     end
     object btnAddPlayer: TButton
       Left = 224
@@ -121,6 +122,7 @@ object frmManagePlayers: TfrmManagePlayers
       LabelPosition = lpLeft
       ReadOnly = True
       TabOrder = 0
+      Text = ''
     end
     object ledtShowLastName: TLabeledEdit
       Left = 75
@@ -133,6 +135,7 @@ object frmManagePlayers: TfrmManagePlayers
       LabelPosition = lpLeft
       ReadOnly = True
       TabOrder = 1
+      Text = ''
     end
     object ledtShowPlayerID: TLabeledEdit
       Left = 75
@@ -146,6 +149,7 @@ object frmManagePlayers: TfrmManagePlayers
       LabelPosition = lpLeft
       ReadOnly = True
       TabOrder = 2
+      Text = ''
     end
     object ledtShowGamesWon: TLabeledEdit
       Left = 299
@@ -159,6 +163,7 @@ object frmManagePlayers: TfrmManagePlayers
       LabelPosition = lpLeft
       ReadOnly = True
       TabOrder = 3
+      Text = ''
     end
     object btnDeletePlayer: TButton
       Left = 224
@@ -192,7 +197,6 @@ object frmManagePlayers: TfrmManagePlayers
     ParentFont = False
     TabOrder = 4
     Visible = False
-    Zoom = 100
   end
   object btnImportPlayers: TButton
     Left = 8
