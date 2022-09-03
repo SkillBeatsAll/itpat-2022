@@ -49,7 +49,6 @@ var
   iRow, iColumn: Integer;
   i: Integer;
 begin
-  // TStyleManager.TrySetStyle('Ruby Graphite'); // or onyx blue
   util.setBackground(self);
   lblSecret.Caption := authentication_u.sOTP;
 
