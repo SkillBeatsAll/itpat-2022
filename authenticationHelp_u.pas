@@ -11,7 +11,7 @@ uses
 type
   TfrmAuthHelp = class(TForm)
     Label1: TLabel;
-    Label2: TLabel;
+    lblSecret: TLabel;
     pbQR: TPaintBox;
     imgBackground: TImage;
     memUserInstructions: TMemo;
@@ -51,7 +51,7 @@ var
 begin
   // TStyleManager.TrySetStyle('Ruby Graphite'); // or onyx blue
   util.setBackground(self);
-  Label2.Caption := authentication_u.sOTP;
+  lblSecret.Caption := authentication_u.sOTP;
 
   // fill memo with user unique key + instructions
   memUserInstructions.Clear;

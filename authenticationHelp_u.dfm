@@ -37,15 +37,15 @@ object frmAuthHelp: TfrmAuthHelp
     Font.Style = [fsBold]
     ParentFont = False
   end
-  object Label2: TLabel
+  object lblSecret: TLabel
     Left = 389
     Top = 42
     Width = 46
     Height = 23
     Caption = 'CODE'
-    Color = 9662683
+    Color = 14933161
     Font.Charset = DEFAULT_CHARSET
-    Font.Color = clAqua
+    Font.Color = 14584182
     Font.Height = -17
     Font.Name = 'Segoe UI'
     Font.Style = [fsBold]
@@ -299,7 +299,7 @@ object frmAuthHelp: TfrmAuthHelp
       A5B4D49B53A29D1867BE81AB38E4C5D0358EB820B6BBCC3822D0F1D2B5EC944E
       87AE68C445B03C8EEC9D39EEF7EC15E9E150A3A23C5764C43BC5668B922C3B3A
       8F00FD3F345FFD6A6A399AEE0000000049454E44AE426082}
-    Proportional = True
+    Stretch = True
     Transparent = True
     OnClick = imgAppleStoreClick
   end
@@ -534,7 +534,7 @@ object frmAuthHelp: TfrmAuthHelp
       0050430400A8210200D41001006A880000354400801A2200400D1100A0860800
       50430400A8210200D41001006A880000354400F0FF6D3D9CA03204B237000000
       0049454E44AE426082}
-    Proportional = True
+    Stretch = True
     Transparent = True
     OnClick = imgGoogleStoreClick
   end
