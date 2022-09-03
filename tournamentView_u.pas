@@ -52,6 +52,8 @@ type
     btnExportTournament: TButton;
     redOutput: TRichEdit;
     btnDeleteTournament: TButton;
+    lblTimePerMatch: TLabel;
+    lblWholeGameTime: TLabel;
     procedure btnShowTournamentClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -114,43 +116,50 @@ procedure TfrmTournamentView.btnExportTournamentClick(Sender: TObject);
 var
   sFile: String;
 begin
-  redOutput.Clear;
-  redOutput.Paragraph.TabCount := 1;
-  redOutput.Paragraph.Tab[0] := 100;
-  with dmTournament.tblGames do
+  if not(ComboBox1.Text = '') then
   begin
-    Locate('GameTitle', ComboBox1.Text, []);
-    redOutput.Lines.Add('Game Title' + #9 + '| ' + FieldByName('GameTitle')
-      .AsString);
-    redOutput.Lines.Add('Time Per Match' + #9 + '| ' +
-      FieldByName('TimePerMatch').AsString);
-    redOutput.Lines.Add('Initiated At' + #9 + '| ' + FieldByName('InitiatedAt')
-      .AsString);
-    redOutput.Lines.Add('Player Count' + #9 + '| ' + FieldByName('PlayerCount')
-      .AsString);
-    redOutput.Lines.Add('Player 1' + #9 + '| ' +
-      getFullName(FieldByName('Player1').AsInteger));
-    redOutput.Lines.Add('Player 2' + #9 + '| ' +
-      getFullName(FieldByName('Player2').AsInteger));
-    redOutput.Lines.Add('Player 3' + #9 + '| ' +
-      getFullName(FieldByName('Player3').AsInteger));
-    redOutput.Lines.Add('Player 4' + #9 + '| ' +
-      getFullName(FieldByName('Player4').AsInteger));
-    redOutput.Lines.Add('Player 5' + #9 + '| ' +
-      getFullName(FieldByName('Player5').AsInteger));
-    redOutput.Lines.Add('Player 6' + #9 + '| ' +
-      getFullName(FieldByName('Player6').AsInteger));
-    redOutput.Lines.Add('Player 7' + #9 + '| ' +
-      getFullName(FieldByName('Player7').AsInteger));
-    redOutput.Lines.Add('Player 8' + #9 + '| ' +
-      getFullName(FieldByName('Player8').AsInteger));
-    redOutput.Lines.Add('Winner' + #9 + '| ' +
-      getFullName(FieldByName('WinningPlayer').AsInteger));
+    redOutput.Clear;
+    redOutput.Paragraph.TabCount := 1;
+    redOutput.Paragraph.Tab[0] := 100;
+    with dmTournament.tblGames do
+    begin
+      Locate('GameTitle', ComboBox1.Text, []);
+      redOutput.Lines.Add('Game Title' + #9 + '| ' + FieldByName('GameTitle')
+        .AsString);
+      redOutput.Lines.Add('Time Per Match' + #9 + '| ' +
+        FieldByName('TimePerMatch').AsString);
+      redOutput.Lines.Add('Initiated At' + #9 + '| ' +
+        FieldByName('InitiatedAt').AsString);
+      redOutput.Lines.Add('Player Count' + #9 + '| ' +
+        FieldByName('PlayerCount').AsString);
+      redOutput.Lines.Add('Player 1' + #9 + '| ' +
+        getFullName(FieldByName('Player1').AsInteger));
+      redOutput.Lines.Add('Player 2' + #9 + '| ' +
+        getFullName(FieldByName('Player2').AsInteger));
+      redOutput.Lines.Add('Player 3' + #9 + '| ' +
+        getFullName(FieldByName('Player3').AsInteger));
+      redOutput.Lines.Add('Player 4' + #9 + '| ' +
+        getFullName(FieldByName('Player4').AsInteger));
+      redOutput.Lines.Add('Player 5' + #9 + '| ' +
+        getFullName(FieldByName('Player5').AsInteger));
+      redOutput.Lines.Add('Player 6' + #9 + '| ' +
+        getFullName(FieldByName('Player6').AsInteger));
+      redOutput.Lines.Add('Player 7' + #9 + '| ' +
+        getFullName(FieldByName('Player7').AsInteger));
+      redOutput.Lines.Add('Player 8' + #9 + '| ' +
+        getFullName(FieldByName('Player8').AsInteger));
+      redOutput.Lines.Add('Winner' + #9 + '| ' +
+        getFullName(FieldByName('WinningPlayer').AsInteger));
 
-    sFile := ComboBox1.Text + '.rtf';
-    redOutput.Lines.SaveToFile(sFile);
-    ShowMessage('Exported tournament to: ' + sFile);
-    ShellExecute(Handle, 'open', pChar(sFile), nil, nil, SW_SHOWNORMAL);
+      sFile := ComboBox1.Text + '.rtf';
+      redOutput.Lines.SaveToFile(sFile);
+      ShowMessage('Exported tournament to: ' + sFile);
+      ShellExecute(Handle, 'open', pChar(sFile), nil, nil, SW_SHOWNORMAL);
+    end;
+  end
+  else
+  begin
+    ShowMessage('Please select a tournament to export first.');
   end;
 
 end;
@@ -239,6 +248,11 @@ begin
           end;
       end;
 
+      // time labels
+      lblTimePerMatch.Caption := 'Time per Match: ' +
+        IntToStr(dmTournament.tblGames['TimePerMatch']) + ' minutes';
+      lblWholeGameTime.Caption := 'Est. time to complete tournament: ' +
+        IntToStr(dmTournament.tblGames['TimePerMatch'] * 7) + ' minutes';
     end;
 
   end
@@ -264,6 +278,11 @@ begin
     end;
     ComboBox1.Refresh;
 
+    // clear labels so they can be filled later
+    lblTimePerMatch.Caption := '';
+    lblWholeGameTime.Caption := '';
+
+    // show certain components based on user level
     if (authentication_u.iUserLevel = 2) or (authentication_u.iUserLevel = 3)
     then
     begin

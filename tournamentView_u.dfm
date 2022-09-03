@@ -12,14 +12,13 @@ object frmTournamentView: TfrmTournamentView
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
-  OldCreateOrder = True
   Position = poMainFormCenter
   OnActivate = FormActivate
   OnClose = FormClose
+  PixelsPerInch = 96
   DesignSize = (
     787
     466)
-  PixelsPerInch = 96
   TextHeight = 15
   object Shape1: TShape
     Left = 8
@@ -437,6 +436,20 @@ object frmTournamentView: TfrmTournamentView
     Height = 15
     Caption = 'Edit Mode:'
   end
+  object lblTimePerMatch: TLabel
+    Left = 431
+    Top = 399
+    Width = 89
+    Height = 15
+    Caption = 'Time per Match: '
+  end
+  object lblWholeGameTime: TLabel
+    Left = 336
+    Top = 420
+    Width = 184
+    Height = 15
+    Caption = 'Est. time to complete tournament: '
+  end
   object btnShowTournament: TButton
     Left = 642
     Top = 397
@@ -484,7 +497,6 @@ object frmTournamentView: TfrmTournamentView
     ParentFont = False
     TabOrder = 4
     Visible = False
-    Zoom = 100
   end
   object btnDeleteTournament: TButton
     Left = 216
