@@ -170,6 +170,10 @@
             <Form>frmManageTournament</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="adminScreen_u.pas">
+            <Form>frmAdminScreen</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

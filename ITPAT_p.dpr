@@ -16,7 +16,8 @@ uses
   registration_u in 'registration_u.pas' {frmRegistration},
   managePlayers_u in 'managePlayers_u.pas' {frmManagePlayers},
   createTournament_u in 'createTournament_u.pas' {frmCreateTournament},
-  manageTournament_u in 'manageTournament_u.pas' {frmManageTournament};
+  manageTournament_u in 'manageTournament_u.pas' {frmManageTournament},
+  adminScreen_u in 'adminScreen_u.pas' {frmAdminScreen};
 
 {$R *.res}
 
@@ -33,5 +34,6 @@ begin
   Application.CreateForm(TfrmManagePlayers, frmManagePlayers);
   Application.CreateForm(TfrmCreateTournament, frmCreateTournament);
   Application.CreateForm(TfrmManageTournament, frmManageTournament);
+  Application.CreateForm(TfrmAdminScreen, frmAdminScreen);
   Application.Run;
 end.
