@@ -45,6 +45,20 @@ object frmCreateTournament: TfrmCreateTournament
     Height = 15
     Caption = 'Time per Match (m):'
   end
+  object Label5: TLabel
+    Left = 16
+    Top = 104
+    Width = 53
+    Height = 15
+    Caption = 'Player List'
+  end
+  object Label6: TLabel
+    Left = 248
+    Top = 104
+    Width = 116
+    Height = 15
+    Caption = 'Players in tournament'
+  end
   object GroupBox1: TGroupBox
     Left = 6
     Top = 80

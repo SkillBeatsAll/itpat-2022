@@ -48,6 +48,8 @@ implementation
 
 procedure TfrmManagePlayers.btnAddPlayerClick(Sender: TObject);
 begin
+  if not (ledtFirstName.Text = '') and not (ledtLastName.Text = '') then
+  begin
   dmTournament.tblPlayers.Append;
   dmTournament.tblPlayers['FirstName'] := ledtFirstName.Text;
   dmTournament.tblPlayers['LastName'] := ledtLastName.Text;
@@ -55,6 +57,10 @@ begin
   dmTournament.tblPlayers.Post;
 
   ShowMessage('Added a new player!');
+  end
+  else begin
+    ShowMessage('One of your fields is blank!');
+  end;
 end;
 
 procedure TfrmManagePlayers.btnDeletePlayerClick(Sender: TObject);

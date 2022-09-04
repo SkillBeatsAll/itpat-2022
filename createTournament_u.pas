@@ -22,6 +22,8 @@ type
     btnCreateTournament: TButton;
     edtTimeMinutes: TEdit;
     Label4: TLabel;
+    Label5: TLabel;
+    Label6: TLabel;
     procedure FormActivate(Sender: TObject);
     procedure lstInTournamentDragOver(Sender, Source: TObject; X, Y: Integer;
       State: TDragState; var Accept: Boolean);
@@ -110,6 +112,7 @@ begin
     dmTournament.tblPlayers.Next;
   end;
 
+  ShowMessage('You can add players to your tournament by dragging them');
 end;
 
 procedure TfrmCreateTournament.FormClose(Sender: TObject;
