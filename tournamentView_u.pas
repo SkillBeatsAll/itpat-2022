@@ -214,35 +214,52 @@ begin
         1 .. 8:
           begin
             tEditLabel := TLabel(FindComponent('QF' + IntToStr(i)));
-            tEditLabel.Caption :=
-              getFullName(dmTournament.tblGameResults['QuarterFinals' +
-              IntToStr(i)]);
+            try
+              tEditLabel.Caption :=
+                getFullName(dmTournament.tblGameResults['QuarterFinals' +
+                IntToStr(i)]);
+            except
+              tEditLabel.Caption := 'TBD';
+            end;
             util.alignLabel(tEditLabel);
             tEditLabel.Font.Color := $007A2346;
           end;
         9 .. 12:
           begin
             tEditLabel := TLabel(FindComponent('SF' + IntToStr(i - 8)));
-            tEditLabel.Caption :=
-              getFullName(dmTournament.tblGameResults
-              ['SemiFinals' + IntToStr(i - 8)]);
+            try
+              tEditLabel.Caption :=
+                getFullName(dmTournament.tblGameResults
+                ['SemiFinals' + IntToStr(i - 8)]);
+            except
+              tEditLabel.Caption := 'TBD';
+            end;
+
             util.alignLabel(tEditLabel);
             tEditLabel.Font.Color := $00DDDDF5;
           end;
         13 .. 14:
           begin
             tEditLabel := TLabel(FindComponent('F' + IntToStr(i - 12)));
-            tEditLabel.Caption :=
-              getFullName(dmTournament.tblGameResults
-              ['Finals' + IntToStr(i - 12)]);
+            try
+              tEditLabel.Caption :=
+                getFullName(dmTournament.tblGameResults
+                ['Finals' + IntToStr(i - 12)]);
+            except
+              tEditLabel.Caption := 'TBD';
+            end;
             util.alignLabel(tEditLabel);
             tEditLabel.Font.Color := $00A74AF8;
           end;
         15:
           begin
             tEditLabel := TLabel(FindComponent('Winner'));
-            tEditLabel.Caption :=
-              getFullName(dmTournament.tblGameResults['Winner']);
+            try
+              tEditLabel.Caption :=
+                getFullName(dmTournament.tblGameResults['Winner']);
+            except
+              tEditLabel.Caption := 'TBD';
+            end;
             util.alignLabel(tEditLabel);
             tEditLabel.Font.Color := TColor($0076FCF7);
           end;

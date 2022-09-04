@@ -42,6 +42,12 @@ type
 var
   frmCreateTournament: TfrmCreateTournament;
 
+const
+  arrFields: array [0 .. 14] of String = ('QuarterFinals1', 'QuarterFinals2',
+    'QuarterFinals3', 'QuarterFinals4', 'QuarterFinals5', 'QuarterFinals6',
+    'QuarterFinals7', 'QuarterFinals8', 'SemiFinals1', 'SemiFinals2',
+    'SemiFinals3', 'SemiFinals4', 'Finals1', 'Finals2', 'Winner');
+
 implementation
 
 uses util_u, mainMenu_u, authentication_u;
@@ -50,7 +56,7 @@ uses util_u, mainMenu_u, authentication_u;
 
 procedure TfrmCreateTournament.btnCreateTournamentClick(Sender: TObject);
 var
-  sName, sSurname, sListBoxEntry: String;
+  sName, sSurname, sListBoxEntry, sField: String;
   i: Integer;
 begin
   if not(lstInTournament.Items.Count = 8) then
@@ -59,42 +65,55 @@ begin
   end
   else if lstInTournament.Items.Count = 8 then
   begin
-    if not dmTournament.tblGames.Locate('GameTitle', edtTournamentName.Text, []) then
+    if (edtTournamentName.Text <> '') or (edtTimeMinutes.Text <> '') then
     begin
-    // write to DB
-    dmTournament.tblGames.Append;
-    dmTournament.tblGames['GameTitle'] := edtTournamentName.Text;
-    dmTournament.tblGames['InitiatedAt'] := startDate.Date;
-    dmTournament.tblGames['PlayerCount'] := 8;
-    dmTournament.tblGames['TimePerMatch'] := StrToInt(edtTimeMinutes.Text);
+      if not dmTournament.tblGames.Locate('GameTitle',
+        edtTournamentName.Text, []) then
+      begin
+        // write to DB
+        dmTournament.tblGames.Append;
+        dmTournament.tblGames['GameTitle'] := edtTournamentName.Text;
+        dmTournament.tblGames['InitiatedAt'] := startDate.Date;
+        dmTournament.tblGames['PlayerCount'] := 8;
+        dmTournament.tblGames['TimePerMatch'] := StrToInt(edtTimeMinutes.Text);
+        dmTournament.tblGames['WinningPlayer'] := 0;
+        // get current logged in user's userID from auth form + store as game manager
+        dmTournament.tblGames['GameManager'] := authentication_u.iUserID;
 
-    // get current logged in user's userID from auth form + store as game manager
-    dmTournament.tblGames['GameManager'] := authentication_u.iUserID;
+        // populate players fields
+        for i := 0 to lstInTournament.Items.Count - 1 do
+        begin
+          sListBoxEntry := lstInTournament.Items[i];
+          sName := Copy(sListBoxEntry, 1, Pos(' ', sListBoxEntry) - 1);
+          Delete(sListBoxEntry, 1, Pos(' ', sListBoxEntry));
+          sSurname := sListBoxEntry;
+          dmTournament.tblPlayers.Locate('FirstName; LastName',
+            VarArrayOf([sName, sSurname]), []);
+          dmTournament.tblGames['Player' + IntToStr(i + 1)] :=
+            dmTournament.tblPlayers['PlayerID'];
+        end;
+        // post to DB
+        dmTournament.tblGames.Post;
 
-    // populate players fields
-    for i := 0 to lstInTournament.Items.Count - 1 do
-    begin
-      sListBoxEntry := lstInTournament.Items[i];
-      sName := Copy(sListBoxEntry, 1, Pos(' ', sListBoxEntry) - 1);
-      Delete(sListBoxEntry, 1, Pos(' ', sListBoxEntry));
-      sSurname := sListBoxEntry;
-      dmTournament.tblPlayers.Locate('FirstName; LastName',
-        VarArrayOf([sName, sSurname]), []);
-      dmTournament.tblGames['Player' + IntToStr(i + 1)] :=
-        dmTournament.tblPlayers['PlayerID'];
-    end;
-    // post to DB
-    dmTournament.tblGames.Post;
+        { make results record for created tournament }
+        dmTournament.tblGameResults.Append;
+        dmTournament.tblGameResults['GameID'] := dmTournament.tblGames
+          ['GameID'];
+        for sField in arrFields do
+        begin
+          dmTournament.tblGameResults[sField] := 0;
+        end;
+        dmTournament.tblGameResults.Post;
 
-    { make results record for created tournament }
-    dmTournament.tblGameResults.Append;
-    dmTournament.tblGameResults['GameID'] := dmTournament.tblGames['GameID'];
-    dmTournament.tblGameResults.Post;
-
-    ShowMessage('Created your tournament!');
+        ShowMessage('Created your tournament!');
+      end
     end
-    else ShowMessage('This tournament name is already taken!')
-  end;
+    else
+      ShowMessage('One of your fields is blank!');
+
+  end
+  else
+    ShowMessage('This tournament name is already taken!')
 end;
 
 procedure TfrmCreateTournament.FormActivate(Sender: TObject);
