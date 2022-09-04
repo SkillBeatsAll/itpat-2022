@@ -103,5 +103,6 @@ object frmMainMenu: TfrmMainMenu
     Font.Style = []
     ParentFont = False
     TabOrder = 4
+    OnClick = btnAdminScreenClick
   end
 end

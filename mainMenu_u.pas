@@ -21,6 +21,7 @@ type
     procedure btnManagePlayersClick(Sender: TObject);
     procedure btnCreateTournamentClick(Sender: TObject);
     procedure btnManageTournamentClick(Sender: TObject);
+    procedure btnAdminScreenClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -33,9 +34,14 @@ var
 implementation
 
 uses authentication_u, tournamentView_u, managePlayers_u, createTournament_u,
-  util_u;
+  util_u, adminScreen_u;
 
 {$R *.dfm}
+
+procedure TfrmMainMenu.btnAdminScreenClick(Sender: TObject);
+begin
+  util.showFormHideSelf(frmAdminScreen, Self);
+end;
 
 procedure TfrmMainMenu.btnCreateTournamentClick(Sender: TObject);
 begin

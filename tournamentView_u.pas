@@ -402,11 +402,15 @@ begin
       ('You have entered edit mode. To modify your tournament, click on one of the shapes!');
 
     // show modifiable tournaments
+    { only filter is userlevel is 2. admins should be able to modify anything :) }
     ComboBox1.Clear;
-    dmTournament.tblGames.Filtered := false;
-    dmTournament.tblGames.Filter := 'GameManager = ' +
-      IntToStr(authentication_u.iUserID);
-    dmTournament.tblGames.Filtered := true;
+    if iUserLevel = 2 then
+    begin
+      dmTournament.tblGames.Filtered := false;
+      dmTournament.tblGames.Filter := 'GameManager = ' +
+        IntToStr(authentication_u.iUserID);
+      dmTournament.tblGames.Filtered := true;
+    end;
     dmTournament.tblGames.First;
     while not dmTournament.tblGames.Eof do
     begin
