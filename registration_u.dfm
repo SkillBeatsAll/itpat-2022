@@ -14,7 +14,6 @@ object frmRegistration: TfrmRegistration
   Font.Style = []
   Position = poMainFormCenter
   OnActivate = FormActivate
-  PixelsPerInch = 96
   TextHeight = 15
   object imgBackground: TImage
     Left = 0

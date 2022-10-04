@@ -40,7 +40,6 @@ implementation
 procedure TfrmManageTournament.btnUpdateClick(Sender: TObject);
 var
   sField, sName, sSurname, sComboBoxText: String;
-  iPlayerID: Integer;
 begin
   { get field to edit in DB (label type + last character of name (which is a number))
     eg: SemiFinals - label type; '3' - last character = SemiFinals3

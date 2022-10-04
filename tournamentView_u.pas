@@ -14,6 +14,7 @@ type
     Shape1: TShape;
     Shape2: TShape;
     Shape3: TShape;
+    Shape4: TShape;
     Shape5: TShape;
     Shape6: TShape;
     Shape7: TShape;
@@ -26,7 +27,6 @@ type
     Shape14: TShape;
     Shape15: TShape;
     btnShowTournament: TButton;
-    Shape4: TShape;
     Label1: TLabel;
     Label2: TLabel;
     Label3: TLabel;
@@ -76,6 +76,11 @@ implementation
 
 uses authentication_u, manageTournament_u;
 
+{ [Function | Get Full Name (of the supplied playerID)
+  (1) Check if the playerID exists (if it doesn't, then it is probably null, so the tournament hasnt progressed past that yet)
+  (2) If it exists, then return "FirstName [space] LastName"
+  (3) If it is null (or doesn't exist), return "TBD" -> To Be Determined.
+}
 function TfrmTournamentView.getFullName(playerID: Integer): String;
 begin
   if dmTournament.tblPlayers.Locate('PlayerID', playerID, []) then
@@ -87,19 +92,19 @@ end;
 
 {$R *.dfm}
 
+{ [Procedure | Delete Tournament Button]
+  (1)  find game id by finding game title
+  (2)  store game id in variable
+  (3)  delete record from tblGames
+  (4)  locate + delete record from tblGameResults
+  (5)  output :D
+}
 procedure TfrmTournamentView.btnDeleteTournamentClick(Sender: TObject);
 var
   iGameID: Integer;
 begin
   if messagedlg('Are you sure?', mtConfirmation, mbYesNo, 0) = mrYes then
   begin
-    { delete tournament button:
-      1)  find game id by finding game title
-      2)  store game id in variable
-      3)  delete record from tblGames
-      4)  locate + delete record from tblGameResults
-      5)  output :D
-    }
     dmTournament.tblGames.Locate('GameID',
       dmTournament.tblGames.Locate('GameTitle', ComboBox1.Text, []), []);
     iGameID := dmTournament.tblGames['GameID'];
@@ -151,9 +156,11 @@ begin
       redOutput.Lines.Add('Winner' + #9 + '| ' +
         getFullName(FieldByName('WinningPlayer').AsInteger));
 
+      { because we are using a rich edit, export to a rich text file to keep formatting! }
       sFile := ComboBox1.Text + '.rtf';
       redOutput.Lines.SaveToFile(sFile);
       ShowMessage('Exported tournament to: ' + sFile);
+      { open the exported file }
       ShellExecute(Handle, 'open', pChar(sFile), nil, nil, SW_SHOWNORMAL);
     end;
   end
@@ -334,6 +341,7 @@ var
 begin
   canvas.pen.Color := TColor($663399);
   canvas.pen.Width := 4;
+  // get the shape number by taking last 2 letters
   case StrToInt(shp3.name[6] + shp3.name[7]) of
     9 .. 12:
       begin
@@ -353,10 +361,13 @@ begin
   end;
 
   // shape 1, shape 3 lines
+  // initialX, initialY = starting point of line
   initialX := shp1.Left + shp1.Width;
   initialY := shp1.Top + Round(shp1.Height / 2);
   canvas.MoveTo(initialX, initialY);
+  // moveX, moveY = where it is moving to after start
   moveX := initialX + Round(shp3.Left / divisionFactor);
+  // if shape 1 is above shape 3, then subtract to get to the final shape, else add
   if shp1.Top < shp3.Top then
     moveY := initialY + (shp3.Height * multiplicationFactor)
   else
@@ -396,6 +407,7 @@ end;
 
 procedure TfrmTournamentView.toggleEditModeClick(Sender: TObject);
 begin
+  // when edit mode gets toggled on
   if toggleEditMode.State = tssOn then
   begin
     ShowMessage
@@ -406,6 +418,7 @@ begin
     ComboBox1.Clear;
     if iUserLevel = 2 then
     begin
+      // only show tournaments that the manager has permission to manage
       dmTournament.tblGames.Filtered := false;
       dmTournament.tblGames.Filter := 'GameManager = ' +
         IntToStr(authentication_u.iUserID);
@@ -414,6 +427,7 @@ begin
     dmTournament.tblGames.First;
     while not dmTournament.tblGames.Eof do
     begin
+      // fill combo box with tournaments that can be managed
       ComboBox1.Items.Add(dmTournament.tblGames['GameTitle']);
       dmTournament.tblGames.Next;
     end;
@@ -422,6 +436,7 @@ begin
     btnDeleteTournament.Visible := true;
   end;
 
+  // if edit mode is turned off, disable the filter + show ALL tournaments!
   if toggleEditMode.State = tssOff then
   begin
     ComboBox1.Clear;

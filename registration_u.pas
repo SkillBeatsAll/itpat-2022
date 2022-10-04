@@ -38,12 +38,15 @@ uses authentication_u, authenticationHelp_u, util_u;
 
 procedure TfrmRegistration.btnRegisterClick(Sender: TObject);
 begin
+  { if the username/password is not blank, and the radiogroup has something selected, then.. }
   if not(edtUsername.Text = NullAsStringValue) and
     not(edtPassword.Text = NullAsStringValue) and
     not(rgpUserLevel.ItemIndex = -1) then
   begin
+    // do the passwords match?
     if edtPassword.Text = edtConfirmPassword.Text then
     begin
+      // if the username does NOT already exist..
       if not(dmTournament.tblCredentials.Locate('Username',
         edtUsername.Text, [])) then
       begin

@@ -15,7 +15,6 @@ object frmTournamentView: TfrmTournamentView
   Position = poMainFormCenter
   OnActivate = FormActivate
   OnClose = FormClose
-  PixelsPerInch = 96
   DesignSize = (
     787
     466)

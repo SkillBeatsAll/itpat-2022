@@ -13,7 +13,6 @@ object frmManageTournament: TfrmManageTournament
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poMainFormCenter
-  PixelsPerInch = 96
   DesignSize = (
     351
     270)

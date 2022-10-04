@@ -3,9 +3,10 @@ unit adminScreen_u;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls, Data.DB, Vcl.ExtCtrls,
-  Vcl.DBCtrls, Vcl.Grids, Vcl.DBGrids, dbmTournament;
+  Vcl.DBCtrls, Vcl.Grids, Vcl.DBGrids, dbmTournament, mainMenu_u, util_u;
 
 type
   TfrmAdminScreen = class(TForm)
@@ -22,6 +23,7 @@ type
     DBNavigator3: TDBNavigator;
     DBNavigator2: TDBNavigator;
     DBNavigator4: TDBNavigator;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     { Private declarations }
   public
@@ -34,5 +36,10 @@ var
 implementation
 
 {$R *.dfm}
+
+procedure TfrmAdminScreen.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  util.showFormHideSelf(frmMainMenu, Self);
+end;
 
 end.

@@ -11,7 +11,7 @@ object frmAdminScreen: TfrmAdminScreen
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poMainFormCenter
-  PixelsPerInch = 96
+  OnClose = FormClose
   TextHeight = 15
   object PageControl1: TPageControl
     Left = 8
