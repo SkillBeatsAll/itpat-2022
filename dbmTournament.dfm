@@ -1,8 +1,8 @@
 object dmTournament: TdmTournament
-  OldCreateOrder = True
   OnCreate = DataModuleCreate
   Height = 394
   Width = 463
+  PixelsPerInch = 96
   object dbmTourny: TADOConnection
     ConnectionString = 
       'Provider=Microsoft.Jet.OLEDB.4.0;User ID=Admin;Data Source=.\ass' +

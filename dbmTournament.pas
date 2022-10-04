@@ -26,6 +26,7 @@ type
 var
   dmTournament: TdmTournament;
 
+  // connection string is constant with a variable ("%pathtodb%")
 const
   sConnectionString
     : String =
@@ -42,10 +43,12 @@ procedure TdmTournament.DataModuleCreate(Sender: TObject);
 var
   sPath: String;
 begin
-  // ensure connection path is correct each time :)
+  // ensure connection path is correct each time
   sPath := ExtractFilePath(Application.ExeName);
+  // replaces the variable with the actual path (needed for program to run on different pcs)
   dbmTourny.ConnectionString := StringReplace(sConnectionString, '%pathtodb%',
     sPath, []);
+  // enable db; make tables active!
   dbmTourny.Connected := true;
   tblGames.Active := true;
   tblGameResults.Active := true;

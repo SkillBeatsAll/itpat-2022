@@ -17,6 +17,7 @@ type
     btnAdminScreen: TButton;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    { below procedures all show the appropriate forms when clicked }
     procedure btnTournamentViewClick(Sender: TObject);
     procedure btnManagePlayersClick(Sender: TObject);
     procedure btnCreateTournamentClick(Sender: TObject);
