@@ -14,7 +14,6 @@ object frmAuthentication: TfrmAuthentication
   Font.Style = []
   Position = poDesktopCenter
   OnCreate = FormCreate
-  PixelsPerInch = 96
   TextHeight = 15
   object imgBackground: TImage
     Left = -8
