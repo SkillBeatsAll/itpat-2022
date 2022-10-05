@@ -14,7 +14,6 @@ object frmAuthHelp: TfrmAuthHelp
   Font.Style = []
   OnActivate = FormActivate
   OnCreate = FormCreate
-  PixelsPerInch = 96
   TextHeight = 15
   object imgBackground: TImage
     Left = -12

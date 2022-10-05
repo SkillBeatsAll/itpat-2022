@@ -76,7 +76,7 @@ begin
     QRCode.QuietZone := StrToIntDef('Auto', 4);
     QRCodeBitmap.SetSize(QRCode.Rows, QRCode.Columns);
 
-    // fill paintbox with QR code (color blue)
+    // fill paintbox with QR code
     { from https://github.com/foxitsoftware/DelphiZXingQRCode/blob/master/TestApp/DelphiZXingQRCodeTestAppMainForm.pas }
     for iRow := 0 to QRCode.Rows - 1 do
     begin
@@ -84,11 +84,11 @@ begin
       begin
         if (QRCode.IsBlack[iRow, iColumn]) then
         begin
-          QRCodeBitmap.Canvas.Pixels[iColumn, iRow] := clWebMediumSlateBlue;
+          QRCodeBitmap.Canvas.Pixels[iColumn, iRow] := $0065491b; {"indigo dye"}
         end
         else
         begin
-          QRCodeBitmap.Canvas.Pixels[iColumn, iRow] := clWebLightCyan;
+          QRCodeBitmap.Canvas.Pixels[iColumn, iRow] := $00e5e5e7; {"platinum"}
         end;
       end;
     end;
