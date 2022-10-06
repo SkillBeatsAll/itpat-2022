@@ -98,7 +98,6 @@
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
         <DCC_RemoteDebug>false</DCC_RemoteDebug>
-        <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>1033</VerInfo_Locale>
@@ -134,45 +133,35 @@
         <DCCReference Include="QRCode_u.pas"/>
         <DCCReference Include="dbmTournament.pas">
             <Form>dmTournament</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="tournamentView_u.pas">
             <Form>frmTournamentView</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="authentication_u.pas">
             <Form>frmAuthentication</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="authenticationHelp_u.pas">
             <Form>frmAuthHelp</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="util_u.pas"/>
         <DCCReference Include="mainMenu_u.pas">
             <Form>frmMainMenu</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="registration_u.pas">
             <Form>frmRegistration</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="managePlayers_u.pas">
             <Form>frmManagePlayers</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="createTournament_u.pas">
             <Form>frmCreateTournament</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="manageTournament_u.pas">
             <Form>frmManageTournament</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="adminScreen_u.pas">
             <Form>frmAdminScreen</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>

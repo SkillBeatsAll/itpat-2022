@@ -2,6 +2,7 @@ program ITPAT_p;
 
 uses
   Vcl.Forms,
+  SysUtils,
   Base32Utility_u in 'Base32Utility_u.pas',
   OTPUtility_u in 'OTPUtility_u.pas',
   QRCode_u in 'QRCode_u.pas',
@@ -25,6 +26,7 @@ begin
   Application.Initialize;
   Application.MainFormOnTaskbar := False;
   Application.Title := 'TournyMan';
+  Application.HelpFile := ExtractFilePath(Application.ExeName) + '\assets\help\TournyMan - Help.chm';
   Application.CreateForm(TfrmAuthentication, frmAuthentication);
   Application.CreateForm(TdmTournament, dmTournament);
   Application.CreateForm(TfrmTournamentView, frmTournamentView);
