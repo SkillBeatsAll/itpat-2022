@@ -18,9 +18,9 @@ type
     Player1: TLabel;
     Player2: TLabel;
     btnUpdate: TButton;
-    PaintBox1: TPaintBox;
+    pbCanvas: TPaintBox;
     procedure FormActivate(Sender: TObject);
-    procedure PaintBox1Paint(Sender: TObject);
+    procedure pbCanvasPaint(Sender: TObject);
     procedure btnUpdateClick(Sender: TObject);
   private
     { Private declarations }
@@ -91,11 +91,11 @@ var
   i: Integer;
 begin
   // paint box init
-  PaintBox1.Width := Self.Width;
-  PaintBox1.Height := Self.Height;
-  PaintBox1.canvas.Create;
-  PaintBox1.canvas.Pen.Color := clBlue;
-  PaintBox1.canvas.Pen.Width := 3;
+  pbCanvas.Width := Self.Width;
+  pbCanvas.Height := Self.Height;
+  pbCanvas.canvas.Create;
+  pbCanvas.canvas.Pen.Color := clBlue;
+  pbCanvas.canvas.Pen.Width := 3;
 
   // tell user which bracket they are working with + player
   lblClickedLabel := TLabel(Sender);
@@ -193,7 +193,7 @@ begin
   begin
     cmbPlayersToPick.Clear;
     dmTournament.tblGames.Locate('GameTitle',
-      frmTournamentView.ComboBox1.Text, []);
+      frmTournamentView.cmbTournaments.Text, []);
     for i := 1 to 8 do
     begin
       dmTournament.tblPlayers.Locate('PlayerID',
@@ -211,18 +211,18 @@ begin
 
 end;
 
-procedure TfrmManageTournament.PaintBox1Paint(Sender: TObject);
+procedure TfrmManageTournament.pbCanvasPaint(Sender: TObject);
 begin
   // draw lines!
   if not(sLabelType = 'QuarterFinals') then
   begin
-    PaintBox1.canvas.MoveTo(127, 106);
-    PaintBox1.canvas.LineTo(179, 106);
-    PaintBox1.canvas.LineTo(179, 140);
-    PaintBox1.canvas.LineTo(198, 140);
-    PaintBox1.canvas.MoveTo(127, 170);
-    PaintBox1.canvas.LineTo(179, 170);
-    PaintBox1.canvas.LineTo(179, 140);
+    pbCanvas.canvas.MoveTo(127, 106);
+    pbCanvas.canvas.LineTo(179, 106);
+    pbCanvas.canvas.LineTo(179, 140);
+    pbCanvas.canvas.LineTo(198, 140);
+    pbCanvas.canvas.MoveTo(127, 170);
+    pbCanvas.canvas.LineTo(179, 170);
+    pbCanvas.canvas.LineTo(179, 140);
   end;
 end;
 

@@ -459,7 +459,7 @@ object frmTournamentView: TfrmTournamentView
     TabOrder = 0
     OnClick = btnShowTournamentClick
   end
-  object ComboBox1: TComboBox
+  object cmbTournaments: TComboBox
     Left = 464
     Top = 441
     Width = 172
@@ -484,7 +484,7 @@ object frmTournamentView: TfrmTournamentView
     TabOrder = 3
     OnClick = btnExportTournamentClick
   end
-  object redOutput: TRichEdit
+  object redExport: TRichEdit
     Left = 744
     Top = 358
     Width = 27

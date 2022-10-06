@@ -46,11 +46,11 @@ type
     F1: TLabel;
     F2: TLabel;
     Winner: TLabel;
-    ComboBox1: TComboBox;
+    cmbTournaments: TComboBox;
     lblEditMode: TLabel;
     toggleEditMode: TToggleSwitch;
     btnExportTournament: TButton;
-    redOutput: TRichEdit;
+    redExport: TRichEdit;
     btnDeleteTournament: TButton;
     lblTimePerMatch: TLabel;
     lblWholeGameTime: TLabel;
@@ -106,7 +106,7 @@ begin
   if messagedlg('Are you sure?', mtConfirmation, mbYesNo, 0) = mrYes then
   begin
     dmTournament.tblGames.Locate('GameID',
-      dmTournament.tblGames.Locate('GameTitle', ComboBox1.Text, []), []);
+      dmTournament.tblGames.Locate('GameTitle', cmbTournaments.Text, []), []);
     iGameID := dmTournament.tblGames['GameID'];
     dmTournament.tblGames.Delete;
 
@@ -121,44 +121,44 @@ procedure TfrmTournamentView.btnExportTournamentClick(Sender: TObject);
 var
   sFile: String;
 begin
-  if not(ComboBox1.Text = '') then
+  if not(cmbTournaments.Text = '') then
   begin
-    redOutput.Clear;
-    redOutput.Paragraph.TabCount := 1;
-    redOutput.Paragraph.Tab[0] := 100;
+    redExport.Clear;
+    redExport.Paragraph.TabCount := 1;
+    redExport.Paragraph.Tab[0] := 100;
     with dmTournament.tblGames do
     begin
-      Locate('GameTitle', ComboBox1.Text, []);
-      redOutput.Lines.Add('Game Title' + #9 + '| ' + FieldByName('GameTitle')
+      Locate('GameTitle', cmbTournaments.Text, []);
+      redExport.Lines.Add('Game Title' + #9 + '| ' + FieldByName('GameTitle')
         .AsString);
-      redOutput.Lines.Add('Time Per Match' + #9 + '| ' +
+      redExport.Lines.Add('Time Per Match' + #9 + '| ' +
         FieldByName('TimePerMatch').AsString);
-      redOutput.Lines.Add('Initiated At' + #9 + '| ' +
+      redExport.Lines.Add('Initiated At' + #9 + '| ' +
         FieldByName('InitiatedAt').AsString);
-      redOutput.Lines.Add('Player Count' + #9 + '| ' +
+      redExport.Lines.Add('Player Count' + #9 + '| ' +
         FieldByName('PlayerCount').AsString);
-      redOutput.Lines.Add('Player 1' + #9 + '| ' +
+      redExport.Lines.Add('Player 1' + #9 + '| ' +
         getFullName(FieldByName('Player1').AsInteger));
-      redOutput.Lines.Add('Player 2' + #9 + '| ' +
+      redExport.Lines.Add('Player 2' + #9 + '| ' +
         getFullName(FieldByName('Player2').AsInteger));
-      redOutput.Lines.Add('Player 3' + #9 + '| ' +
+      redExport.Lines.Add('Player 3' + #9 + '| ' +
         getFullName(FieldByName('Player3').AsInteger));
-      redOutput.Lines.Add('Player 4' + #9 + '| ' +
+      redExport.Lines.Add('Player 4' + #9 + '| ' +
         getFullName(FieldByName('Player4').AsInteger));
-      redOutput.Lines.Add('Player 5' + #9 + '| ' +
+      redExport.Lines.Add('Player 5' + #9 + '| ' +
         getFullName(FieldByName('Player5').AsInteger));
-      redOutput.Lines.Add('Player 6' + #9 + '| ' +
+      redExport.Lines.Add('Player 6' + #9 + '| ' +
         getFullName(FieldByName('Player6').AsInteger));
-      redOutput.Lines.Add('Player 7' + #9 + '| ' +
+      redExport.Lines.Add('Player 7' + #9 + '| ' +
         getFullName(FieldByName('Player7').AsInteger));
-      redOutput.Lines.Add('Player 8' + #9 + '| ' +
+      redExport.Lines.Add('Player 8' + #9 + '| ' +
         getFullName(FieldByName('Player8').AsInteger));
-      redOutput.Lines.Add('Winner' + #9 + '| ' +
+      redExport.Lines.Add('Winner' + #9 + '| ' +
         getFullName(FieldByName('WinningPlayer').AsInteger));
 
       { because we are using a rich edit, export to a rich text file to keep formatting! }
-      sFile := ComboBox1.Text + '.rtf';
-      redOutput.Lines.SaveToFile(sFile);
+      sFile := cmbTournaments.Text + '.rtf';
+      redExport.Lines.SaveToFile(sFile);
       ShowMessage('Exported tournament to: ' + sFile);
       { open the exported file }
       ShellExecute(Handle, 'open', pChar(sFile), nil, nil, SW_SHOWNORMAL);
@@ -178,9 +178,9 @@ var
   i, tournamentsize: Integer;
 begin
   // OUTPUT LINES
-  if not(ComboBox1.Text = '') then
+  if not(cmbTournaments.Text = '') then
   begin
-    dmTournament.tblGames.Locate('GameTitle', ComboBox1.Text, []);
+    dmTournament.tblGames.Locate('GameTitle', cmbTournaments.Text, []);
     dmTournament.tblGameResults.Locate('GameID',
       dmTournament.tblGames['GameID'], []);
     tournamentsize := dmTournament.tblGames['PlayerCount'];
@@ -280,7 +280,7 @@ begin
     end;
 
   end
-  else if (ComboBox1.Text = '') then
+  else if (cmbTournaments.Text = '') then
   begin
     ShowMessage('Please select a tournament to view using the dropdown box!');
   end;
@@ -293,14 +293,14 @@ begin
   if not(toggleEditMode.State = tssOn) then
   begin
     { clear combobox and populate with tournaments }
-    ComboBox1.Clear;
+    cmbTournaments.Clear;
     dmTournament.tblGames.First;
     while not dmTournament.tblGames.Eof do
     begin
-      ComboBox1.Items.Add(dmTournament.tblGames['GameTitle']);
+      cmbTournaments.Items.Add(dmTournament.tblGames['GameTitle']);
       dmTournament.tblGames.Next;
     end;
-    ComboBox1.Refresh;
+    cmbTournaments.Refresh;
 
     // clear labels so they can be filled later
     lblTimePerMatch.Caption := '';
@@ -393,7 +393,7 @@ procedure TfrmTournamentView.PlayerLabelClick(Sender: TObject);
 begin
   if toggleEditMode.State = tssOn then
   begin
-    if not(ComboBox1.Text = '') then
+    if not(cmbTournaments.Text = '') then
     begin
       frmManageTournament.Show;
       frmManageTournament.FormActivate(Sender);
@@ -415,7 +415,7 @@ begin
 
     // show modifiable tournaments
     { only filter is userlevel is 2. admins should be able to modify anything :) }
-    ComboBox1.Clear;
+    cmbTournaments.Clear;
     if iUserLevel = 2 then
     begin
       // only show tournaments that the manager has permission to manage
@@ -428,10 +428,10 @@ begin
     while not dmTournament.tblGames.Eof do
     begin
       // fill combo box with tournaments that can be managed
-      ComboBox1.Items.Add(dmTournament.tblGames['GameTitle']);
+      cmbTournaments.Items.Add(dmTournament.tblGames['GameTitle']);
       dmTournament.tblGames.Next;
     end;
-    ComboBox1.Refresh;
+    cmbTournaments.Refresh;
 
     btnDeleteTournament.Visible := true;
   end;
@@ -439,15 +439,15 @@ begin
   // if edit mode is turned off, disable the filter + show ALL tournaments!
   if toggleEditMode.State = tssOff then
   begin
-    ComboBox1.Clear;
+    cmbTournaments.Clear;
     dmTournament.tblGames.Filtered := false;
     dmTournament.tblGames.First;
     while not dmTournament.tblGames.Eof do
     begin
-      ComboBox1.Items.Add(dmTournament.tblGames['GameTitle']);
+      cmbTournaments.Items.Add(dmTournament.tblGames['GameTitle']);
       dmTournament.tblGames.Next;
     end;
-    ComboBox1.Refresh;
+    cmbTournaments.Refresh;
 
     btnDeleteTournament.Visible := false;
   end;

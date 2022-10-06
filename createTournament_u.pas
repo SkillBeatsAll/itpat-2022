@@ -13,7 +13,7 @@ type
     edtTournamentName: TEdit;
     lstInTournament: TListBox;
     lstPlayers: TListBox;
-    GroupBox1: TGroupBox;
+    grpPlayerLists: TGroupBox;
     Label1: TLabel;
     startDate: TDateTimePicker;
     Label2: TLabel;

@@ -184,7 +184,7 @@ object frmManagePlayers: TfrmManagePlayers
     TabOrder = 3
     OnClick = btnExportPlayersClick
   end
-  object redOutput: TRichEdit
+  object redExport: TRichEdit
     Left = 248
     Top = 337
     Width = 42

@@ -7,7 +7,7 @@ uses
 
 type
   TdmTournament = class(TDataModule)
-    dbmTourny: TADOConnection;
+    conTournamentDB: TADOConnection;
     tblGames: TADOTable;
     dsGames: TDataSource;
     tblGameResults: TADOTable;
@@ -46,10 +46,10 @@ begin
   // ensure connection path is correct each time
   sPath := ExtractFilePath(Application.ExeName);
   // replaces the variable with the actual path (needed for program to run on different pcs)
-  dbmTourny.ConnectionString := StringReplace(sConnectionString, '%pathtodb%',
+  conTournamentDB.ConnectionString := StringReplace(sConnectionString, '%pathtodb%',
     sPath, []);
   // enable db; make tables active!
-  dbmTourny.Connected := true;
+  conTournamentDB.Connected := true;
   tblGames.Active := true;
   tblGameResults.Active := true;
   tblPlayers.Active := true;

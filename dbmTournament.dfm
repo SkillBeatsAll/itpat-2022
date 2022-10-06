@@ -2,8 +2,7 @@ object dmTournament: TdmTournament
   OnCreate = DataModuleCreate
   Height = 394
   Width = 463
-  PixelsPerInch = 96
-  object dbmTourny: TADOConnection
+  object conTournamentDB: TADOConnection
     ConnectionString = 
       'Provider=Microsoft.Jet.OLEDB.4.0;User ID=Admin;Data Source=.\ass' +
       'ets\database\tournamentDB.mdb;Mode=Share Deny None;Persist Secur' +
@@ -21,7 +20,7 @@ object dmTournament: TdmTournament
     Top = 144
   end
   object tblGames: TADOTable
-    Connection = dbmTourny
+    Connection = conTournamentDB
     CursorType = ctStatic
     TableName = 'tblGames'
     Left = 112
@@ -33,14 +32,14 @@ object dmTournament: TdmTournament
     Top = 24
   end
   object tblGameResults: TADOTable
-    Connection = dbmTourny
+    Connection = conTournamentDB
     CursorType = ctStatic
     TableName = 'tblGameResults'
     Left = 112
     Top = 96
   end
   object tblPlayers: TADOTable
-    Connection = dbmTourny
+    Connection = conTournamentDB
     CursorType = ctStatic
     TableName = 'tblPlayers'
     Left = 112
@@ -57,7 +56,7 @@ object dmTournament: TdmTournament
     Top = 176
   end
   object tblCredentials: TADOTable
-    Connection = dbmTourny
+    Connection = conTournamentDB
     CursorType = ctStatic
     TableName = 'tblCredentials'
     Left = 112

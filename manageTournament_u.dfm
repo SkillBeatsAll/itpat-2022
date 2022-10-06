@@ -80,12 +80,12 @@ object frmManageTournament: TfrmManageTournament
     Transparent = True
     StyleElements = []
   end
-  object PaintBox1: TPaintBox
+  object pbCanvas: TPaintBox
     Left = 0
     Top = 0
     Width = 343
     Height = 262
-    OnPaint = PaintBox1Paint
+    OnPaint = pbCanvasPaint
   end
   object cmbPlayersToPick: TComboBox
     Left = 198

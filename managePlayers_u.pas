@@ -25,7 +25,7 @@ type
     btnDeletePlayer: TButton;
     Label1: TLabel;
     btnExportPlayers: TButton;
-    redOutput: TRichEdit;
+    redExport: TRichEdit;
     btnImportPlayers: TButton;
     procedure btnAddPlayerClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -48,17 +48,18 @@ implementation
 
 procedure TfrmManagePlayers.btnAddPlayerClick(Sender: TObject);
 begin
-  if not (ledtFirstName.Text = '') and not (ledtLastName.Text = '') then
+  if not(ledtFirstName.Text = '') and not(ledtLastName.Text = '') then
   begin
-  dmTournament.tblPlayers.Append;
-  dmTournament.tblPlayers['FirstName'] := ledtFirstName.Text;
-  dmTournament.tblPlayers['LastName'] := ledtLastName.Text;
-  dmTournament.tblPlayers['GamesWon'] := 0;
-  dmTournament.tblPlayers.Post;
+    dmTournament.tblPlayers.Append;
+    dmTournament.tblPlayers['FirstName'] := ledtFirstName.Text;
+    dmTournament.tblPlayers['LastName'] := ledtLastName.Text;
+    dmTournament.tblPlayers['GamesWon'] := 0;
+    dmTournament.tblPlayers.Post;
 
-  ShowMessage('Added a new player!');
+    ShowMessage('Added a new player!');
   end
-  else begin
+  else
+  begin
     ShowMessage('One of your fields is blank!');
   end;
 end;
@@ -77,11 +78,11 @@ var
   sFile: String;
 begin
   // redoutput initialization
-  redOutput.Clear;
-  redOutput.Paragraph.TabCount := 1;
-  redOutput.Paragraph.Tab[0] := 200;
-  redOutput.Lines.Add('Player Name'#9'Games Won');
-  redOutput.Lines.Add
+  redExport.Clear;
+  redExport.Paragraph.TabCount := 1;
+  redExport.Paragraph.Tab[0] := 200;
+  redExport.Lines.Add('Player Name'#9'Games Won');
+  redExport.Lines.Add
     ('----------------------------------------------------------------------');
 
   dmTournament.tblPlayers.First;
@@ -89,12 +90,12 @@ begin
   begin
     while not Eof do
     begin
-      redOutput.Lines.Add(frmTournamentView.getFullName(FieldByName('PlayerID')
+      redExport.Lines.Add(frmTournamentView.getFullName(FieldByName('PlayerID')
         .AsInteger) + #9 + FieldByName('GamesWon').AsString);
       next;
     end;
     sFile := 'PlayersList.rtf';
-    redOutput.Lines.SaveToFile(sFile);
+    redExport.Lines.SaveToFile(sFile);
     ShowMessage('Exported tournament to: ' + sFile);
     ShellExecute(Handle, 'open', pChar(sFile), nil, nil, SW_SHOWNORMAL);
 

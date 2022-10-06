@@ -59,7 +59,7 @@ object frmCreateTournament: TfrmCreateTournament
     Height = 15
     Caption = 'Players in tournament'
   end
-  object GroupBox1: TGroupBox
+  object grpPlayerLists: TGroupBox
     Left = 6
     Top = 80
     Width = 459
