@@ -1,6 +1,7 @@
 object frmCreateTournament: TfrmCreateTournament
   Left = 0
   Top = 0
+  HelpContext = 8
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Create a tournament | TournyMan'

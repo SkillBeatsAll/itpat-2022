@@ -1,6 +1,7 @@
 object frmManageTournament: TfrmManageTournament
   Left = 0
   Top = 0
+  HelpContext = 7
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Manage Tournament | TournyMan'

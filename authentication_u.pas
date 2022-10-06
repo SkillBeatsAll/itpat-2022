@@ -8,7 +8,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, dbmTournament,
   OTPUtility_u,
   Vcl.ExtCtrls, authenticationHelp_u, jpeg, util_u, tournamentView_u,
-  registration_u, mainMenu_u;
+  registration_u, mainMenu_u, Vcl.HtmlHelpViewer;
 
 type
   TfrmAuthentication = class(TForm)

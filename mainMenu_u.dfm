@@ -1,6 +1,7 @@
 object frmMainMenu: TfrmMainMenu
   Left = 0
   Top = 0
+  HelpContext = 1
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Main Menu | TournyMan'
@@ -15,7 +16,6 @@ object frmMainMenu: TfrmMainMenu
   Position = poMainFormCenter
   OnActivate = FormActivate
   OnClose = FormClose
-  PixelsPerInch = 96
   TextHeight = 15
   object lblWelcome: TLabel
     Left = 8

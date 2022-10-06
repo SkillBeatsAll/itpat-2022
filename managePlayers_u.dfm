@@ -1,6 +1,7 @@
 object frmManagePlayers: TfrmManagePlayers
   Left = 0
   Top = 0
+  HelpContext = 9
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Manage Players | TournyMan'
@@ -14,7 +15,6 @@ object frmManagePlayers: TfrmManagePlayers
   Font.Style = []
   Position = poMainFormCenter
   OnClose = FormClose
-  PixelsPerInch = 96
   TextHeight = 15
   object DBGrid1: TDBGrid
     Left = 8
@@ -69,7 +69,7 @@ object frmManagePlayers: TfrmManagePlayers
       Width = 121
       Height = 23
       EditLabel.Width = 60
-      EditLabel.Height = 15
+      EditLabel.Height = 23
       EditLabel.Caption = 'First Name:'
       LabelPosition = lpLeft
       TabOrder = 0
@@ -81,7 +81,7 @@ object frmManagePlayers: TfrmManagePlayers
       Width = 121
       Height = 23
       EditLabel.Width = 59
-      EditLabel.Height = 15
+      EditLabel.Height = 23
       EditLabel.Caption = 'Last Name:'
       LabelPosition = lpLeft
       TabOrder = 1
@@ -117,7 +117,7 @@ object frmManagePlayers: TfrmManagePlayers
       Width = 121
       Height = 23
       EditLabel.Width = 60
-      EditLabel.Height = 15
+      EditLabel.Height = 23
       EditLabel.Caption = 'First Name:'
       LabelPosition = lpLeft
       ReadOnly = True
@@ -130,7 +130,7 @@ object frmManagePlayers: TfrmManagePlayers
       Width = 121
       Height = 23
       EditLabel.Width = 59
-      EditLabel.Height = 15
+      EditLabel.Height = 23
       EditLabel.Caption = 'Last Name:'
       LabelPosition = lpLeft
       ReadOnly = True
@@ -144,7 +144,7 @@ object frmManagePlayers: TfrmManagePlayers
       Height = 23
       Alignment = taCenter
       EditLabel.Width = 49
-      EditLabel.Height = 15
+      EditLabel.Height = 23
       EditLabel.Caption = 'Player ID:'
       LabelPosition = lpLeft
       ReadOnly = True
@@ -158,7 +158,7 @@ object frmManagePlayers: TfrmManagePlayers
       Height = 23
       Alignment = taCenter
       EditLabel.Width = 67
-      EditLabel.Height = 15
+      EditLabel.Height = 23
       EditLabel.Caption = 'Games Won:'
       LabelPosition = lpLeft
       ReadOnly = True
