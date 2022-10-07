@@ -109,8 +109,9 @@ procedure TfrmManagePlayers.btnImportPlayersClick(Sender: TObject);
 var
   dialogSelectFile: TOpenDialog;
   sStringsList: TStringList;
-  i: Integer;
+  i, iNotImported: Integer;
   sFirstName, sLastName: String;
+  bNameTooLong: Boolean;
 begin
   dialogSelectFile := TOpenDialog.Create(nil);
   sStringsList := TStringList.Create();
@@ -129,6 +130,10 @@ begin
     dialogSelectFile.Free;
   end;
 
+  // initialize data-checking variables
+  bNameTooLong := false;
+  iNotImported := 0;
+
   if sStringsList.Count <> 0 then
   begin
     for i := 0 to sStringsList.Count - 1 do
@@ -137,19 +142,33 @@ begin
       sFirstName := SplitString(sStringsList.Strings[i], ',')[0];
       sLastName := SplitString(sStringsList.Strings[i], ',')[1];
 
-      // write to DB
-      with dmTournament do
+      { check if the current first/last name is under 20 }
+      if not((Length(sFirstName) > 20) or (Length(sLastName) > 20)) then
       begin
-        tblPlayers.Append;
-        tblPlayers['FirstName'] := sFirstName;
-        tblPlayers['LastName'] := sLastName;
-        tblPlayers['GamesWon'] := 0;
-        tblPlayers.Post;
+        // write to DB
+        with dmTournament do
+        begin
+          tblPlayers.Append;
+          tblPlayers['FirstName'] := sFirstName;
+          tblPlayers['LastName'] := sLastName;
+          tblPlayers['GamesWon'] := 0;
+          tblPlayers.Post;
+        end;
+      end
+      else
+      begin
+        // not imported
+        bNameTooLong := true;
+        Inc(iNotImported); { increase the count of the names not imported }
       end;
     end;
 
-    ShowMessage('Successfully imported ' + IntToStr(sStringsList.Count) +
-      ' players!');
+    if bNameTooLong then
+      ShowMessage
+        ('One of your first names / last names that you tried to import was too long, and as a result, was not imported!');
+
+    ShowMessage('Successfully imported ' + IntToStr(sStringsList.Count -
+      iNotImported) + ' players!');
   end;
   sStringsList.Free;
 end;
