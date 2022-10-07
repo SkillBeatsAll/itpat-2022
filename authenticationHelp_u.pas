@@ -59,8 +59,8 @@ begin
   begin
     memUserInstructions.Lines.Add(arrMemoLines[i]);
   end;
-  memUserInstructions.Lines[memUserInstructions.Lines.Count] := 'Your key: ' +
-    '"' + authentication_u.sOTP + '"';
+  memUserInstructions.Lines[memUserInstructions.Lines.Count] := 'Your secret: '
+    + '"' + authentication_u.sOTP + '"';
 
   // initialization
   QRCodeBitmap := TBitmap.Create;
@@ -69,7 +69,7 @@ begin
   try
     // QR Code = OTP
     QRCode.Data := 'otpauth://totp/' + authentication_u.sUsername +
-      '@JoelCedrasPAT?secret=' + authentication_u.sOTP + '&issuer=' +
+      '@TournyMan?secret=' + authentication_u.sOTP + '&issuer=' +
       authentication_u.sUsername;
 
     QRCode.Encoding := TQRCodeEncoding(0);
@@ -84,11 +84,12 @@ begin
       begin
         if (QRCode.IsBlack[iRow, iColumn]) then
         begin
-          QRCodeBitmap.Canvas.Pixels[iColumn, iRow] := $0065491b; {"indigo dye"}
+          QRCodeBitmap.Canvas.Pixels[iColumn, iRow] := $0065491B;
+          { "indigo dye" }
         end
         else
         begin
-          QRCodeBitmap.Canvas.Pixels[iColumn, iRow] := $00e5e5e7; {"platinum"}
+          QRCodeBitmap.Canvas.Pixels[iColumn, iRow] := $00E5E5E7; { "platinum" }
         end;
       end;
     end;
@@ -135,7 +136,7 @@ end;
 
 procedure TfrmAuthHelp.pbQRPaint(Sender: TObject);
 var
-  qrScale: Real;
+  rQRScale: Real;
 begin
   // Scale QR code correctly
   { credits to https://github.com/foxitsoftware/DelphiZXingQRCode/blob/master/TestApp/DelphiZXingQRCodeTestAppMainForm.pas }
@@ -146,14 +147,14 @@ begin
   begin
     if (pbQR.Width < pbQR.Height) then
     begin
-      qrScale := pbQR.Width / QRCodeBitmap.Width;
+      rQRScale := pbQR.Width / QRCodeBitmap.Width;
     end
     else
     begin
-      qrScale := pbQR.Height / QRCodeBitmap.Height;
+      rQRScale := pbQR.Height / QRCodeBitmap.Height;
     end;
-    pbQR.Canvas.StretchDraw(Rect(0, 0, Trunc(qrScale * QRCodeBitmap.Width),
-      Trunc(qrScale * QRCodeBitmap.Height)), QRCodeBitmap);
+    pbQR.Canvas.StretchDraw(Rect(0, 0, Trunc(rQRScale * QRCodeBitmap.Width),
+      Trunc(rQRScale * QRCodeBitmap.Height)), QRCodeBitmap);
 
   end;
 end;

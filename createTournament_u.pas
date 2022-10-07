@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
   System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.DBCtrls,
-  dbmTournament, Vcl.ComCtrls;
+  dbmTournament, Vcl.ComCtrls, StrUtils;
 
 type
   TfrmCreateTournament = class(TForm)
@@ -65,55 +65,58 @@ begin
   end
   else if lstInTournament.Items.Count = 8 then
   begin
-    if (edtTournamentName.Text <> '') or (edtTimeMinutes.Text <> '') then
+    // if both fields are NOT blank
+    if (edtTournamentName.Text <> '') and (StrToInt(edtTimeMinutes.Text) > 0)
+    then
     begin
       if not dmTournament.tblGames.Locate('GameTitle',
         edtTournamentName.Text, []) then
       begin
-        // write to DB
-        dmTournament.tblGames.Append;
-        dmTournament.tblGames['GameTitle'] := edtTournamentName.Text;
-        dmTournament.tblGames['InitiatedAt'] := startDate.Date;
-        dmTournament.tblGames['PlayerCount'] := 8;
-        dmTournament.tblGames['TimePerMatch'] := StrToInt(edtTimeMinutes.Text);
-        dmTournament.tblGames['WinningPlayer'] := 0;
-        // get current logged in user's userID from auth form + store as game manager
-        dmTournament.tblGames['GameManager'] := authentication_u.iUserID;
-
-        // populate players fields
-        for i := 0 to lstInTournament.Items.Count - 1 do
+        with dmTournament do
         begin
-          sListBoxEntry := lstInTournament.Items[i];
-          sName := Copy(sListBoxEntry, 1, Pos(' ', sListBoxEntry) - 1);
-          Delete(sListBoxEntry, 1, Pos(' ', sListBoxEntry));
-          sSurname := sListBoxEntry;
-          dmTournament.tblPlayers.Locate('FirstName; LastName',
-            VarArrayOf([sName, sSurname]), []);
-          dmTournament.tblGames['Player' + IntToStr(i + 1)] :=
-            dmTournament.tblPlayers['PlayerID'];
-        end;
-        // post to DB
-        dmTournament.tblGames.Post;
+          // write to DB
+          tblGames.Append;
+          tblGames['GameTitle'] := edtTournamentName.Text;
+          tblGames['InitiatedAt'] := startDate.Date;
+          tblGames['PlayerCount'] := 8;
+          tblGames['TimePerMatch'] := StrToInt(edtTimeMinutes.Text);
+          tblGames['WinningPlayer'] := 0;
+          // get current logged in user's userID from auth form + store as game manager
+          tblGames['GameManager'] := authentication_u.iUserID;
 
-        { make results record for created tournament }
-        dmTournament.tblGameResults.Append;
-        dmTournament.tblGameResults['GameID'] := dmTournament.tblGames
-          ['GameID'];
-        for sField in arrFields do
-        begin
-          dmTournament.tblGameResults[sField] := 0;
-        end;
-        dmTournament.tblGameResults.Post;
+          // populate players fields
+          for i := 0 to lstInTournament.Items.Count - 1 do
+          begin
+            sListBoxEntry := lstInTournament.Items[i];
+            sName := Copy(sListBoxEntry, 1, Pos(' ', sListBoxEntry) - 1);
+            Delete(sListBoxEntry, 1, Pos(' ', sListBoxEntry));
+            sSurname := sListBoxEntry;
+            tblPlayers.Locate('FirstName; LastName',
+              VarArrayOf([sName, sSurname]), []);
+            tblGames['Player' + IntToStr(i + 1)] := tblPlayers['PlayerID'];
+          end;
+          // post to DB
+          tblGames.Post;
 
-        ShowMessage('Created your tournament!');
+          { make results record for created tournament }
+          tblGameResults.Append;
+          tblGameResults['GameID'] := tblGames['GameID'];
+          for sField in arrFields do
+          begin
+            tblGameResults[sField] := 0;
+          end;
+          tblGameResults.Post;
+
+          ShowMessage('Created your tournament!');
+        end
       end
+      else
+        ShowMessage('This tournament name is already taken!')
     end
     else
       ShowMessage('One of your fields is blank!');
 
-  end
-  else
-    ShowMessage('This tournament name is already taken!')
+  end;
 end;
 
 procedure TfrmCreateTournament.FormActivate(Sender: TObject);
@@ -123,12 +126,15 @@ begin
   lstInTournament.Clear;
   edtTournamentName.Clear;
 
-  dmTournament.tblPlayers.First;
-  while not dmTournament.tblPlayers.Eof do
+  with dmTournament do
   begin
-    lstPlayers.Items.Add(dmTournament.tblPlayers['FirstName'] + ' ' +
-      dmTournament.tblPlayers['LastName']);
-    dmTournament.tblPlayers.Next;
+    tblPlayers.First;
+    while not tblPlayers.Eof do
+    begin
+      lstPlayers.Items.Add(tblPlayers['FirstName'] + ' ' + tblPlayers
+        ['LastName']);
+      tblPlayers.Next;
+    end;
   end;
 
   ShowMessage('You can add players to your tournament by dragging them');

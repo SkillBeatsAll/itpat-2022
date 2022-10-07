@@ -44,45 +44,44 @@ begin
   { get field to edit in DB (label type + last character of name (which is a number))
     eg: SemiFinals - label type; '3' - last character = SemiFinals3
   }
-  dmTournament.tblGameResults.Edit;
-  if not(sLabelType = 'Winner') then
+  with dmTournament do
   begin
-    sField := sLabelType + lblClickedLabel.Name[Length(lblClickedLabel.Name)];
-  end
-  else
-    sField := 'Winner';
+    tblGameResults.Edit;
+    if not(sLabelType = 'Winner') then
+    begin
+      sField := sLabelType + lblClickedLabel.Name[Length(lblClickedLabel.Name)];
+    end
+    else
+      sField := 'Winner';
 
-  {
-    Locate player;
-    Store results in appropriate field!
-  }
-  sComboBoxText := cmbPlayersToPick.Text;
-  sName := Copy(sComboBoxText, 1, Pos(' ', sComboBoxText) - 1);
-  Delete(sComboBoxText, 1, Pos(' ', sComboBoxText));
-  sSurname := sComboBoxText;
-  dmTournament.tblPlayers.Locate('FirstName; LastName',
-    VarArrayOf([sName, sSurname]), []);
-  dmTournament.tblGameResults[sField] := dmTournament.tblPlayers['PlayerID'];
-  dmTournament.tblGameResults.Post;
+    {
+      Locate player;
+      Store results in appropriate field!
+    }
+    sComboBoxText := cmbPlayersToPick.Text;
+    sName := Copy(sComboBoxText, 1, Pos(' ', sComboBoxText) - 1);
+    Delete(sComboBoxText, 1, Pos(' ', sComboBoxText));
+    sSurname := sComboBoxText;
+    tblPlayers.Locate('FirstName; LastName', VarArrayOf([sName, sSurname]), []);
+    tblGameResults[sField] := tblPlayers['PlayerID'];
+    tblGameResults.Post;
 
-  // if the user chose the winner, store in db in dedicated fields.
-  if sLabelType = 'Winner' then
-  begin
-    dmTournament.tblPlayers.Edit;
-    dmTournament.tblPlayers['GamesWon'] := dmTournament.tblPlayers
-      ['GamesWon'] + 1;
-    dmTournament.tblPlayers.Post;
-    dmTournament.tblGames.Locate('GameID', dmTournament.tblGameResults
-      ['GameID'], []);
-    dmTournament.tblGames.Edit;
-    dmTournament.tblGames['WinningPlayer'] := dmTournament.tblPlayers
-      ['PlayerID'];
-    dmTournament.tblGames.Post;
+    // if the user chose the winner, store in db in dedicated fields.
+    if sLabelType = 'Winner' then
+    begin
+      tblPlayers.Edit;
+      tblPlayers['GamesWon'] := tblPlayers['GamesWon'] + 1;
+      tblPlayers.Post;
+      tblGames.Locate('GameID', tblGameResults['GameID'], []);
+      tblGames.Edit;
+      tblGames['WinningPlayer'] := tblPlayers['PlayerID'];
+      tblGames.Post;
+    end;
+    ShowMessage('Updated tournament successfully!');
+
+    // redisplay tournament by simulating a button click
+    frmTournamentView.btnShowTournamentClick(Self);
   end;
-  ShowMessage('Updated tournament successfully!');
-
-  // redisplay tournament by simulating a button click
-  frmTournamentView.btnShowTournamentClick(Self);
 end;
 
 procedure TfrmManageTournament.FormActivate(Sender: TObject);
@@ -91,17 +90,19 @@ var
   i: Integer;
 begin
   // paint box init
-  pbCanvas.Width := Self.Width;
-  pbCanvas.Height := Self.Height;
-  pbCanvas.canvas.Create;
-  pbCanvas.canvas.Pen.Color := clBlue;
-  pbCanvas.canvas.Pen.Width := 3;
+  with pbCanvas do
+  begin
+    Width := Self.Width;
+    Height := Self.Height;
+    canvas.Create;
+    canvas.Pen.Color := clBlue;
+    canvas.Pen.Width := 3;
+  end;
 
-  // tell user which bracket they are working with + player
+  // get label that resulted in frmManageTournament being shown (clicked label)
   lblClickedLabel := TLabel(Sender);
-  lblEditing.Caption := 'You are editing: ' + lblClickedLabel.Caption + ' (' +
-    lblClickedLabel.Name + ')';
-  // get current label
+
+  // deduce which bracket from the clicked label
   case lblClickedLabel.Name[1] of
     'Q':
       sLabelType := 'QuarterFinals';
@@ -112,6 +113,9 @@ begin
     'W':
       sLabelType := 'Winner';
   end;
+  // tell user which bracket they are working with + player
+  lblEditing.Caption := 'You are editing: ' + lblClickedLabel.Caption + ' (' +
+    sLabelType + lblClickedLabel.Name[Length(lblClickedLabel.Name)] + ')';
 
   if sLabelType = 'QuarterFinals' then
   begin
@@ -180,6 +184,10 @@ begin
   begin
     lblLink1 := TLabel(frmTournamentView.FindComponent('F1'));
     lblLink2 := TLabel(frmTournamentView.FindComponent('F2'));
+
+    // tell user which bracket they are working with + player (different for winner)
+    lblEditing.Caption := 'You are editing: ' + lblClickedLabel.Caption + ' (' +
+      sLabelType + ')';
   end;
 
   // set captions to the player names + align in center
@@ -191,16 +199,17 @@ begin
   // fill combo box:
   if sLabelType = 'QuarterFinals' then
   begin
-    cmbPlayersToPick.Clear;
-    dmTournament.tblGames.Locate('GameTitle',
-      frmTournamentView.cmbTournaments.Text, []);
-    for i := 1 to 8 do
+    with dmTournament do
     begin
-      dmTournament.tblPlayers.Locate('PlayerID',
-        dmTournament.tblGames['Player' + IntToStr(i)], []);
-      cmbPlayersToPick.Items.Add(dmTournament.tblPlayers['FirstName'] + ' ' +
-        dmTournament.tblPlayers['LastName']);
-    end;
+      cmbPlayersToPick.Clear;
+      tblGames.Locate('GameTitle', frmTournamentView.cmbTournaments.Text, []);
+      for i := 1 to 8 do
+      begin
+        tblPlayers.Locate('PlayerID', tblGames['Player' + IntToStr(i)], []);
+        cmbPlayersToPick.Items.Add(tblPlayers['FirstName'] + ' ' + tblPlayers
+          ['LastName']);
+      end;
+    end
   end
   else
   begin
@@ -216,13 +225,16 @@ begin
   // draw lines!
   if not(sLabelType = 'QuarterFinals') then
   begin
-    pbCanvas.canvas.MoveTo(127, 106);
-    pbCanvas.canvas.LineTo(179, 106);
-    pbCanvas.canvas.LineTo(179, 140);
-    pbCanvas.canvas.LineTo(198, 140);
-    pbCanvas.canvas.MoveTo(127, 170);
-    pbCanvas.canvas.LineTo(179, 170);
-    pbCanvas.canvas.LineTo(179, 140);
+    with pbCanvas.canvas do
+    begin
+      MoveTo(127, 106);
+      LineTo(179, 106);
+      LineTo(179, 140);
+      LineTo(198, 140);
+      MoveTo(127, 170);
+      LineTo(179, 170);
+      LineTo(179, 140);
+    end;
   end;
 end;
 

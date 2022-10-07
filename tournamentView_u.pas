@@ -83,11 +83,13 @@ uses authentication_u, manageTournament_u;
 }
 function TfrmTournamentView.getFullName(playerID: Integer): String;
 begin
-  if dmTournament.tblPlayers.Locate('PlayerID', playerID, []) then
-    result := dmTournament.tblPlayers['FirstName'] + ' ' +
-      dmTournament.tblPlayers['LastName']
-  else
-    result := 'TBD';
+  with dmTournament do
+  begin
+    if tblPlayers.Locate('PlayerID', playerID, []) then
+      result := tblPlayers['FirstName'] + ' ' + tblPlayers['LastName']
+    else
+      result := 'TBD';
+  end;
 end;
 
 {$R *.dfm}
@@ -105,15 +107,18 @@ var
 begin
   if messagedlg('Are you sure?', mtConfirmation, mbYesNo, 0) = mrYes then
   begin
-    dmTournament.tblGames.Locate('GameID',
-      dmTournament.tblGames.Locate('GameTitle', cmbTournaments.Text, []), []);
-    iGameID := dmTournament.tblGames['GameID'];
-    dmTournament.tblGames.Delete;
+    with dmTournament do
+    begin
+      tblGames.Locate('GameID', tblGames.Locate('GameTitle',
+        cmbTournaments.Text, []), []);
+      iGameID := tblGames['GameID'];
+      tblGames.Delete;
 
-    dmTournament.tblGameResults.Locate('GameID', iGameID, []);
-    dmTournament.tblGameResults.Delete;
+      tblGameResults.Locate('GameID', iGameID, []);
+      tblGameResults.Delete;
 
-    ShowMessage('Deleted the tournament!');
+      ShowMessage('Deleted the tournament!');
+    end;
   end;
 end;
 
@@ -162,6 +167,7 @@ begin
       ShowMessage('Exported tournament to: ' + sFile);
       { open the exported file }
       ShellExecute(Handle, 'open', pChar(sFile), nil, nil, SW_SHOWNORMAL);
+
     end;
   end
   else
@@ -180,10 +186,13 @@ begin
   // OUTPUT LINES
   if not(cmbTournaments.Text = '') then
   begin
-    dmTournament.tblGames.Locate('GameTitle', cmbTournaments.Text, []);
-    dmTournament.tblGameResults.Locate('GameID',
-      dmTournament.tblGames['GameID'], []);
-    tournamentsize := dmTournament.tblGames['PlayerCount'];
+    with dmTournament do
+    begin
+      tblGames.Locate('GameTitle', cmbTournaments.Text, []);
+      tblGameResults.Locate('GameID', tblGames['GameID'], []);
+      tournamentsize := tblGames['PlayerCount'];
+    end;
+
     i := 1;
     repeat
       tS1 := TShape(FindComponent('Shape' + IntToStr(i)));
@@ -214,7 +223,6 @@ begin
         2) The label is aligned horizontally in the center
         3) The label is aligned vertically in the center
         4) Color set to one of four colors.
-
         Note: 2 and 3 are performed by a utility function under util_u.
       }
       case i of
@@ -292,35 +300,38 @@ begin
   // if user was not already editing the form (used so it doesnt reset if user comes back from managing tournament)
   if not(toggleEditMode.State = tssOn) then
   begin
-    { clear combobox and populate with tournaments }
-    cmbTournaments.Clear;
-    dmTournament.tblGames.First;
-    while not dmTournament.tblGames.Eof do
+    with dmTournament do
     begin
-      cmbTournaments.Items.Add(dmTournament.tblGames['GameTitle']);
-      dmTournament.tblGames.Next;
-    end;
-    cmbTournaments.Refresh;
+      { clear combobox and populate with tournaments }
+      cmbTournaments.Clear;
+      tblGames.First;
+      while not tblGames.Eof do
+      begin
+        cmbTournaments.Items.Add(tblGames['GameTitle']);
+        tblGames.Next;
+      end;
+      cmbTournaments.Refresh;
 
-    // clear labels so they can be filled later
-    lblTimePerMatch.Caption := '';
-    lblWholeGameTime.Caption := '';
+      // clear labels so they can be filled later
+      lblTimePerMatch.Caption := '';
+      lblWholeGameTime.Caption := '';
 
-    // show certain components based on user level
-    if (authentication_u.iUserLevel = 2) or (authentication_u.iUserLevel = 3)
-    then
-    begin
-      lblEditMode.Visible := true;
-      toggleEditMode.State := tssOff;
-      toggleEditMode.Visible := true;
-      btnDeleteTournament.Visible := false;
-    end
-    else if authentication_u.iUserLevel = 1 then
-    begin
-      lblEditMode.Visible := false;
-      toggleEditMode.State := tssOff;
-      toggleEditMode.Visible := false;
-      btnDeleteTournament.Visible := false;
+      // show certain components based on user level
+      if (authentication_u.iUserLevel = 2) or (authentication_u.iUserLevel = 3)
+      then
+      begin
+        lblEditMode.Visible := true;
+        toggleEditMode.State := tssOff;
+        toggleEditMode.Visible := true;
+        btnDeleteTournament.Visible := false;
+      end
+      else if authentication_u.iUserLevel = 1 then
+      begin
+        lblEditMode.Visible := false;
+        toggleEditMode.State := tssOff;
+        toggleEditMode.Visible := false;
+        btnDeleteTournament.Visible := false;
+      end;
     end;
   end;
 
@@ -414,42 +425,48 @@ begin
       ('You have entered edit mode. To modify your tournament, click on one of the shapes!');
 
     // show modifiable tournaments
-    { only filter is userlevel is 2. admins should be able to modify anything :) }
-    cmbTournaments.Clear;
-    if iUserLevel = 2 then
+    with dmTournament do
     begin
-      // only show tournaments that the manager has permission to manage
-      dmTournament.tblGames.Filtered := false;
-      dmTournament.tblGames.Filter := 'GameManager = ' +
-        IntToStr(authentication_u.iUserID);
-      dmTournament.tblGames.Filtered := true;
-    end;
-    dmTournament.tblGames.First;
-    while not dmTournament.tblGames.Eof do
-    begin
-      // fill combo box with tournaments that can be managed
-      cmbTournaments.Items.Add(dmTournament.tblGames['GameTitle']);
-      dmTournament.tblGames.Next;
-    end;
-    cmbTournaments.Refresh;
+      { only filter is userlevel is 2. admins should be able to modify anything :) }
+      cmbTournaments.Clear;
+      if iUserLevel = 2 then
+      begin
+        // only show tournaments that the manager has permission to manage
+        tblGames.Filtered := false;
+        tblGames.Filter := 'GameManager = ' +
+          IntToStr(authentication_u.iUserID);
+        tblGames.Filtered := true;
+      end;
+      tblGames.First;
+      while not tblGames.Eof do
+      begin
+        // fill combo box with tournaments that can be managed
+        cmbTournaments.Items.Add(tblGames['GameTitle']);
+        tblGames.Next;
+      end;
+      cmbTournaments.Refresh;
 
-    btnDeleteTournament.Visible := true;
+      btnDeleteTournament.Visible := true;
+    end;
   end;
 
   // if edit mode is turned off, disable the filter + show ALL tournaments!
   if toggleEditMode.State = tssOff then
   begin
-    cmbTournaments.Clear;
-    dmTournament.tblGames.Filtered := false;
-    dmTournament.tblGames.First;
-    while not dmTournament.tblGames.Eof do
+    with dmTournament do
     begin
-      cmbTournaments.Items.Add(dmTournament.tblGames['GameTitle']);
-      dmTournament.tblGames.Next;
-    end;
-    cmbTournaments.Refresh;
+      cmbTournaments.Clear;
+      tblGames.Filtered := false;
+      tblGames.First;
+      while not tblGames.Eof do
+      begin
+        cmbTournaments.Items.Add(tblGames['GameTitle']);
+        tblGames.Next;
+      end;
+      cmbTournaments.Refresh;
 
-    btnDeleteTournament.Visible := false;
+      btnDeleteTournament.Visible := false;
+    end;
   end;
 end;
 

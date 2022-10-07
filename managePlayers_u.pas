@@ -50,13 +50,16 @@ procedure TfrmManagePlayers.btnAddPlayerClick(Sender: TObject);
 begin
   if not(ledtFirstName.Text = '') and not(ledtLastName.Text = '') then
   begin
-    dmTournament.tblPlayers.Append;
-    dmTournament.tblPlayers['FirstName'] := ledtFirstName.Text;
-    dmTournament.tblPlayers['LastName'] := ledtLastName.Text;
-    dmTournament.tblPlayers['GamesWon'] := 0;
-    dmTournament.tblPlayers.Post;
+    with dmTournament do
+    begin
+      tblPlayers.Append;
+      tblPlayers['FirstName'] := ledtFirstName.Text;
+      tblPlayers['LastName'] := ledtLastName.Text;
+      tblPlayers['GamesWon'] := 0;
+      tblPlayers.Post;
 
-    ShowMessage('Added a new player!');
+      ShowMessage('Added a new player!');
+    end;
   end
   else
   begin
@@ -85,9 +88,9 @@ begin
   redExport.Lines.Add
     ('----------------------------------------------------------------------');
 
-  dmTournament.tblPlayers.First;
   with dmTournament.tblPlayers do
   begin
+    First;
     while not Eof do
     begin
       redExport.Lines.Add(frmTournamentView.getFullName(FieldByName('PlayerID')
@@ -135,11 +138,14 @@ begin
       sLastName := SplitString(sStringsList.Strings[i], ',')[1];
 
       // write to DB
-      dmTournament.tblPlayers.Append;
-      dmTournament.tblPlayers['FirstName'] := sFirstName;
-      dmTournament.tblPlayers['LastName'] := sLastName;
-      dmTournament.tblPlayers['GamesWon'] := 0;
-      dmTournament.tblPlayers.Post;
+      with dmTournament do
+      begin
+        tblPlayers.Append;
+        tblPlayers['FirstName'] := sFirstName;
+        tblPlayers['LastName'] := sLastName;
+        tblPlayers['GamesWon'] := 0;
+        tblPlayers.Post;
+      end;
     end;
 
     ShowMessage('Successfully imported ' + IntToStr(sStringsList.Count) +
@@ -150,11 +156,13 @@ end;
 
 procedure TfrmManagePlayers.DBGrid1CellClick(Column: TColumn);
 begin
-  ledtShowPlayerID.Text := dmTournament.tblPlayers['PlayerID'];
-  ledtShowFirstName.Text := dmTournament.tblPlayers['FirstName'];
-  ledtShowLastName.Text := dmTournament.tblPlayers['LastName'];
-  ledtShowGamesWon.Text := dmTournament.tblPlayers['GamesWon'];
-
+  with dmTournament do
+  begin
+    ledtShowPlayerID.Text := tblPlayers['PlayerID'];
+    ledtShowFirstName.Text := tblPlayers['FirstName'];
+    ledtShowLastName.Text := tblPlayers['LastName'];
+    ledtShowGamesWon.Text := tblPlayers['GamesWon'];
+  end;
   // gray out boxes so its obvious that its not editable
   ledtShowPlayerID.Enabled := false;
   ledtShowFirstName.Enabled := false;
