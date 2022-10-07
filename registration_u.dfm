@@ -99,6 +99,7 @@ object frmRegistration: TfrmRegistration
     Top = 23
     Width = 121
     Height = 23
+    MaxLength = 20
     TabOrder = 0
   end
   object edtPassword: TEdit

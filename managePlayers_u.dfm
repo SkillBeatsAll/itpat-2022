@@ -72,6 +72,7 @@ object frmManagePlayers: TfrmManagePlayers
       EditLabel.Height = 23
       EditLabel.Caption = 'First Name:'
       LabelPosition = lpLeft
+      MaxLength = 20
       TabOrder = 0
       Text = ''
     end
@@ -84,6 +85,7 @@ object frmManagePlayers: TfrmManagePlayers
       EditLabel.Height = 23
       EditLabel.Caption = 'Last Name:'
       LabelPosition = lpLeft
+      MaxLength = 20
       TabOrder = 1
       Text = ''
     end
