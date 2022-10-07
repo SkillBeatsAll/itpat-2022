@@ -21,6 +21,7 @@ type
     Label3: TLabel;
     lblRegisterRedirect: TLabel;
     imgLogoLong: TImage;
+    Label4: TLabel;
     procedure btnLoginClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure lblRegisterRedirectClick(Sender: TObject);

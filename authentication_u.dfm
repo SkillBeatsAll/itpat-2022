@@ -69,6 +69,13 @@ object frmAuthentication: TfrmAuthentication
     ParentShowHint = False
     ShowHint = False
   end
+  object Label4: TLabel
+    Left = 44
+    Top = 86
+    Width = 316
+    Height = 15
+    Caption = 'Tip: You can push F1 on any screen for help documentation!'
+  end
   object edtUsername: TEdit
     Left = 180
     Top = 104
