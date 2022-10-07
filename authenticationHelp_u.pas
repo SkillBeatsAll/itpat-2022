@@ -50,7 +50,7 @@ var
   i: Integer;
 begin
   util.setBackground(self);
-  lblSecret.Caption := authentication_u.sOTP;
+  lblSecret.Caption := authentication_u.sGeneratedSecret;
 
   // fill memo with user unique key + instructions
   memUserInstructions.Clear;
@@ -60,7 +60,7 @@ begin
     memUserInstructions.Lines.Add(arrMemoLines[i]);
   end;
   memUserInstructions.Lines[memUserInstructions.Lines.Count] := 'Your secret: '
-    + '"' + authentication_u.sOTP + '"';
+    + '"' + authentication_u.sGeneratedSecret + '"';
 
   // initialization
   QRCodeBitmap := TBitmap.Create;
@@ -69,7 +69,7 @@ begin
   try
     // QR Code = OTP
     QRCode.Data := 'otpauth://totp/' + authentication_u.sUsername +
-      '@TournyMan?secret=' + authentication_u.sOTP + '&issuer=' +
+      '@TournyMan?secret=' + authentication_u.sGeneratedSecret + '&issuer=' +
       authentication_u.sUsername;
 
     QRCode.Encoding := TQRCodeEncoding(0);

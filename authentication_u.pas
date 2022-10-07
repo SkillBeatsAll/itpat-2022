@@ -24,6 +24,7 @@ type
     procedure btnLoginClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure lblRegisterRedirectClick(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -33,7 +34,7 @@ type
 
 var
   frmAuthentication: TfrmAuthentication;
-  sOTP, sUsername, sPassword: String;
+  sGeneratedSecret, sUsername, sPassword: String;
   iUserLevel, iUserID: Integer;
 
 implementation
@@ -94,13 +95,46 @@ begin
   end;
 end;
 
+procedure TfrmAuthentication.FormActivate(Sender: TObject);
+begin
+  // check if admin account exists; else force user to create
+  with dmTournament do
+  begin
+    if not tblCredentials.Locate('UserLevel', 3, []) then
+    begin
+      ShowMessage
+        ('Because this is your first time using TournyMan, we will help you setup an admin account.');
+      sUsername := InputBox('Admin Account Setup | TournyMan',
+        'Please enter a username for the admin account:', '');;
+      sPassword := InputBox('Admin Account Setup | TournyMan',
+        'Please create a password for the admin account:', '');
+      sGeneratedSecret := GenerateOTPSecret(16); { generate secret for OTP }
+
+      { add new account to the database }
+      tblCredentials.Insert;
+      tblCredentials['UserName'] := sUsername;
+      tblCredentials['Password'] := sPassword;
+      tblCredentials['UserLevel'] := 3;
+      tblCredentials['Secret'] := sGeneratedSecret;
+      tblCredentials.Post;
+
+      ShowMessage('Successfully created the admin account!');
+
+      { show help for 2fa with new admin account! }
+      frmAuthHelp.Show;
+    end;
+  end;
+end;
+
 procedure TfrmAuthentication.FormCreate(Sender: TObject);
+
 begin
   util.setBackground(Self);
 
   imgLogoLong.Picture.LoadFromFile(GetCurrentDir +
     '/assets/logo/logo_long.png');
   imgLogoLong.Proportional := true;
+
 end;
 
 procedure TfrmAuthentication.lblRegisterRedirectClick(Sender: TObject);

@@ -69,8 +69,8 @@ begin
           // otp only a requirement for managers
           if authentication_u.iUserLevel = 2 then
           begin
-            authentication_u.sOTP := GenerateOTPSecret(16);
-            tblCredentials['Secret'] := authentication_u.sOTP;
+            authentication_u.sGeneratedSecret := GenerateOTPSecret(16);
+            tblCredentials['Secret'] := authentication_u.sGeneratedSecret;
           end;
           tblCredentials.Post;
 

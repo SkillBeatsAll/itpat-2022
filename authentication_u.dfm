@@ -14,6 +14,7 @@ object frmAuthentication: TfrmAuthentication
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poDesktopCenter
+  OnActivate = FormActivate
   OnCreate = FormCreate
   TextHeight = 15
   object imgBackground: TImage
