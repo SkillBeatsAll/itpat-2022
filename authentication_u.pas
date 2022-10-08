@@ -132,10 +132,10 @@ procedure TfrmAuthentication.FormCreate(Sender: TObject);
 begin
   util.setBackground(Self);
 
+  // load header image from assets folder
   imgLogoLong.Picture.LoadFromFile(GetCurrentDir +
     '/assets/logo/logo_long.png');
   imgLogoLong.Proportional := true;
-
 end;
 
 procedure TfrmAuthentication.lblRegisterRedirectClick(Sender: TObject);
