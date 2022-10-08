@@ -264,7 +264,7 @@ begin
               tEditLabel.Caption := 'TBD';
             end;
             util.alignLabel(tEditLabel);
-            tEditLabel.Font.Color := $00A74AF8;
+            tEditLabel.Font.Color := $0076FCF7;
           end;
         15:
           begin
@@ -276,7 +276,7 @@ begin
               tEditLabel.Caption := 'TBD';
             end;
             util.alignLabel(tEditLabel);
-            tEditLabel.Font.Color := TColor($0076FCF7);
+            tEditLabel.Font.Color := $0064e76f;
           end;
       end;
 
