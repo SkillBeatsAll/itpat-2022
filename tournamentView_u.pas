@@ -110,20 +110,27 @@ procedure TfrmTournamentView.btnDeleteTournamentClick(Sender: TObject);
 var
   iGameID: Integer;
 begin
-  if messagedlg('Are you sure?', mtConfirmation, mbYesNo, 0) = mrYes then
+  if not(cmbTournaments.Text = NullAsStringValue) then
   begin
-    with dmTournament do
+    if messagedlg('Are you sure?', mtConfirmation, mbYesNo, 0) = mrYes then
     begin
-      tblGames.Locate('GameID', tblGames.Locate('GameTitle',
-        cmbTournaments.Text, []), []);
-      iGameID := tblGames['GameID'];
-      tblGames.Delete;
+      with dmTournament do
+      begin
+        tblGames.Locate('GameID', tblGames.Locate('GameTitle',
+          cmbTournaments.Text, []), []);
+        iGameID := tblGames['GameID'];
+        tblGames.Delete;
 
-      tblGameResults.Locate('GameID', iGameID, []);
-      tblGameResults.Delete;
+        tblGameResults.Locate('GameID', iGameID, []);
+        tblGameResults.Delete;
 
-      ShowMessage('Deleted the tournament!');
+        ShowMessage('Deleted the tournament!');
+      end;
     end;
+  end
+  else
+  begin
+    ShowMessage('Please select a tournament to delete first.');
   end;
 end;
 
@@ -131,7 +138,7 @@ procedure TfrmTournamentView.btnExportTournamentClick(Sender: TObject);
 var
   sFile: String;
 begin
-  if not(cmbTournaments.Text = '') then
+  if not(cmbTournaments.Text = NullAsStringValue) then
   begin
     redExport.Clear;
     redExport.Paragraph.TabCount := 1;
