@@ -66,7 +66,7 @@ begin
   else if lstInTournament.Items.Count = 8 then
   begin
     // if both fields are NOT blank
-    if (edtTournamentName.Text <> '') and (StrToInt(edtTimeMinutes.Text) > 0)
+    if (edtTournamentName.Text <> NullAsStringValue) and (StrToInt(edtTimeMinutes.Text) > 0)
     then
     begin
       if not dmTournament.tblGames.Locate('GameTitle',

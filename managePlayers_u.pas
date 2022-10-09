@@ -48,7 +48,8 @@ implementation
 
 procedure TfrmManagePlayers.btnAddPlayerClick(Sender: TObject);
 begin
-  if not(ledtFirstName.Text = '') and not(ledtLastName.Text = '') then
+  if not(ledtFirstName.Text = NullAsStringValue) and
+    not(ledtLastName.Text = NullAsStringValue) then
   begin
     with dmTournament do
     begin
