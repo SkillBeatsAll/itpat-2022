@@ -20,6 +20,12 @@ implementation
 uses authentication_u, authenticationHelp_u;
 
 { util }
+
+/// <summary>
+/// <para>Sets the background of the form to a random gradient from the assets folder.</para>
+/// <para><c>formToUpdate</c> - the form for which the background will be changed</para>
+/// </summary>
+/// <remarks>If the specified form does not have a TImage component called imgBackground, the procedure will fail.</remarks>
 class procedure util.setBackground(formToUpdate: TForm);
 var
   i: Integer;
@@ -35,12 +41,21 @@ begin
   end;
 end;
 
+/// <summary>
+/// <para>Hides one form (usually itself), and shows another</para>
+/// <para><c>formToShow</c> - the form that will be shown</para>
+/// <para><c>formToHide</c> - the form that will be hidden</para>
+/// </summary>
 class procedure util.showFormHideSelf(formToShow: TForm; formToHide: TForm);
 begin
   formToShow.Show;
   formToHide.Hide;
 end;
 
+/// <summary>
+/// <para>Aligns the specified label horizontally and vertically.</para>
+/// <para><c>lblToAlign</c> - the label that will be aligned</para>
+/// </summary>
 class procedure util.alignLabel(lblToAlign: TLabel);
 begin
   // horizontal:

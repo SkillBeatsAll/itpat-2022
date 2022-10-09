@@ -76,11 +76,18 @@ implementation
 
 uses authentication_u, manageTournament_u;
 
+{$R *.dfm}
 { [Function | Get Full Name (of the supplied playerID)
   (1) Check if the playerID exists (if it doesn't, then it is probably null, so the tournament hasnt progressed past that yet)
   (2) If it exists, then return "FirstName [space] LastName"
   (3) If it is null (or doesn't exist), return "TBD" -> To Be Determined.
 }
+
+/// <summary>Fetches the full name of the specified player ID</summary>
+/// <param name="playerID">The player whose full name will be returned</param>
+/// <returns>The player's full name as a string if found;
+/// otherwise 'TBD' (to be determined) is returned.
+/// </returns>
 function TfrmTournamentView.getFullName(playerID: Integer): String;
 begin
   with dmTournament do
@@ -91,8 +98,6 @@ begin
       result := 'TBD';
   end;
 end;
-
-{$R *.dfm}
 
 { [Procedure | Delete Tournament Button]
   (1)  find game id by finding game title
@@ -184,7 +189,7 @@ var
   i, tournamentsize: Integer;
 begin
   // OUTPUT LINES
-  if not(cmbTournaments.Text = '') then
+  if not(cmbTournaments.Text = NullAsStringValue) then
   begin
     with dmTournament do
     begin
@@ -276,7 +281,7 @@ begin
               tEditLabel.Caption := 'TBD';
             end;
             util.alignLabel(tEditLabel);
-            tEditLabel.Font.Color := $0064e76f;
+            tEditLabel.Font.Color := $0064E76F;
           end;
       end;
 
@@ -288,7 +293,7 @@ begin
     end;
 
   end
-  else if (cmbTournaments.Text = '') then
+  else if (cmbTournaments.Text = NullAsStringValue) then
   begin
     ShowMessage('Please select a tournament to view using the dropdown box!');
   end;
@@ -404,7 +409,7 @@ procedure TfrmTournamentView.PlayerLabelClick(Sender: TObject);
 begin
   if toggleEditMode.State = tssOn then
   begin
-    if not(cmbTournaments.Text = '') then
+    if not(cmbTournaments.Text = NullAsStringValue) then
     begin
       frmManageTournament.Show;
       frmManageTournament.FormActivate(Sender);
